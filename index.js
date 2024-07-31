@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 
 
-const token = '5416293431:AAEBc6WmixONzcPtQj5wvpwflZvCKyYK6SA'
+const token = '5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ'
 
 const bcAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
 
