@@ -10,9 +10,13 @@ const bcAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
 const bot = new TelegramApi(token, {polling: true})
 
 const app = express()
+app.use(express.json())
+app.use(cors({origin: '*'}));
 
-app.use(express.json)
-app.use(cors())
+app.get('/', async (req,res) => {
+    return res.send('Server is working...')
+})
+
 
 bot.on('message', async msg => {
     const chatId = msg.chat.id;
@@ -139,9 +143,7 @@ bot.on('message', async msg => {
 //
 // })
 
-app.get('/', async (req,res) => {
-    return res.send('Server is working...')
-})
+
 
 app.post('/web-data', async (req, res) => {
     const {queryId, login, password} = req.body
