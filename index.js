@@ -139,8 +139,8 @@ bot.on('message', async msg => {
 //
 // })
 
-app.get('/', function (req,res){
-    res.send('Server is working...')
+app.get('/', async (req,res) => {
+    return res.send('Server is working...')
 })
 
 app.post('/web-data', async (req, res) => {
