@@ -10,8 +10,6 @@ const clarisApiUrl = 'https://api.claris.su/main'
 const bot = new TelegramApi(token, {polling: true})
 
 
-
-
 const app = express()
 app.use(express.json())
 app.use(cors({origin: '*'}));
@@ -28,7 +26,7 @@ bot.on('message', async msg => {
     // console.log('chatId',chatId) // 311462440
 //    console.log('message', msg)
 
-  //  https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=Уведомление о документе №123456&reply_markup={"inline_keyboard":[[{"text":"Открыть","web_app":{"url":"https://incandescent-salmiakki-46088e.netlify.app/show/123456"}}]],"resize_keyboard":true}
+    //  https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=Уведомление о документе №123456&reply_markup={"inline_keyboard":[[{"text":"Открыть","web_app":{"url":"https://incandescent-salmiakki-46088e.netlify.app/show/123456"}}]],"resize_keyboard":true}
 
     //@getmyid_bot
     // Your user ID: 311462440
@@ -199,14 +197,15 @@ app.post('/web-data', async (req, res) => {
             console.log('data', data)
 
 
+            let dbData = JSON.parse(fs.readFileSync('db.json', (err, data) => (data)))
 
-            const dbData = JSON.parse(fs.readFileSync('db.json', (err, data) => (data)))
+            // const tokenData = {
+            //     'token': data?.access_token
+            // }
 
-            const tokenData = {
-                'token': data?.access_token
-            }
+            dbData['chat_id'] = data?.access_token
 
-            fs.writeFileSync('data.json', JSON.stringify([...dbData, ...tokenData]));
+            fs.writeFileSync('data.json', JSON.stringify(dbData));
 
 
             const text = fs.readFileSync('db.json', 'utf8');
