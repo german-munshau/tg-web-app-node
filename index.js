@@ -112,7 +112,7 @@ const getMessageText = (message) => {
     if (message?.error === 'invalid_grant') {
         return 'Введен неправильный логин или пароль'
     } else if (message?.access_token) {
-        return `Вы авторизованы, ${message.login}`
+        return 'Вы авторизованы'
     }
     return 'Ошибка сервера'
 }
@@ -129,6 +129,8 @@ app.post('/auth', async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
+
+            console.log(data)
 
             // запись токена в файл
             const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
