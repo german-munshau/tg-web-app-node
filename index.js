@@ -202,10 +202,14 @@ app.post('/web-data', async (req, res) => {
             // const tokenData = {
             //     'token': data?.access_token
             // }
+            console.log('dbData1:',dbData)
+
 
             dbData['chat_id'] = data?.access_token
 
-            fs.writeFileSync('data.json', JSON.stringify(dbData));
+            console.log('dbData2:',dbData)
+
+            fs.writeFileSync('db.json', JSON.stringify(dbData));
 
 
             const text = fs.readFileSync('db.json', 'utf8');
