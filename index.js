@@ -7,7 +7,7 @@ const token = '5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ'
 
 const webAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
 
-const clarisApiUrl = 'https://api.claris.su'
+const clarisApiUrl = 'https://api.claris.su/main'
 
 const bot = new TelegramApi(token, {polling: true})
 
@@ -15,7 +15,7 @@ const app = express()
 app.use(express.json())
 app.use(cors({origin: '*'}));
 
-app.get('/', async (req,res) => {
+app.get('/', async (req, res) => {
     return res.send('Server is working...')
 })
 
@@ -147,7 +147,6 @@ bot.on('message', async msg => {
 // })
 
 
-
 app.post('/web-data', async (req, res) => {
     const {queryId, login, password} = req.body
 
@@ -161,8 +160,9 @@ app.post('/web-data', async (req, res) => {
         password
     }
 
+const fullUrl = clarisApiUrl + '/Token'
     // With Fetch
-    fetch(clarisApiUrl + '/Token', {
+    fetch(fullUrl, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
@@ -174,16 +174,13 @@ app.post('/web-data', async (req, res) => {
         .catch((error) => console.error(error));
 
 
-
-
-
     try {
         await bot.answerWebAppQuery(queryId, {
             type: 'article',
             id: queryId,
             title: 'Ответ от бота',
             input_message_content: {
-                message_text: 'Ответ от бота: ' + login + password
+                message_text: `login: ${login}, password: ${password}`,
             }
 
         })
