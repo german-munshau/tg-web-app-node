@@ -141,8 +141,12 @@ app.get('/document/:id', async (req, res) => {
     // console.log('req.query',req.query)
     // console.log('req.params',req.params["id"])
 
-    res.send(`document ... ${req.params["id"]}`)
+    // res.send(`document ... ${req.params["id"]}`)
+    const data = {
+        id: req.params["id"]
+    }
 
+    res.json(data)
 })
 
 
