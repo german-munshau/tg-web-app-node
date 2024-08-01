@@ -146,7 +146,7 @@ app.get('/document/:id', async (req, res) => {
         id: req.params["id"]
     }
 
-    res.json(data)
+    return res.json(data)
 })
 
 
