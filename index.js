@@ -24,6 +24,8 @@ bot.on('message', async msg => {
     const chatId = msg.chat.id;
     const text = msg.text;
 
+    console.log('chatId',chatId)
+
     if (text === '/start') {
 
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
@@ -161,7 +163,7 @@ app.post('/web-data', async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
-            // console.log(data?.access_token)
+            console.log('data', data)
             try {
                 await bot.answerWebAppQuery(queryId, {
                     type: 'article',
@@ -179,21 +181,6 @@ app.post('/web-data', async (req, res) => {
         })
         .catch(async (error) => {
             console.error(error)
-            try {
-                await bot.answerWebAppQuery(queryId, {
-                    type: 'article',
-                    id: queryId,
-                    title: 'Ответ от бота',
-                    input_message_content: {
-                        message_text: `error: ${error.error_description}`,
-                    }
-                })
-                return res.status(200).json({})
-            } catch (e) {
-                return res.status(500).json({})
-            }
-
-
         });
 
 
