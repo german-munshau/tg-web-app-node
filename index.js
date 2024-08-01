@@ -210,7 +210,7 @@ app.post('/web-data', async (req, res) => {
 
             // console.log('dbData3:', JSON.stringify(dbData))
 
-            fs.writeFileSync('db.json', JSON.stringify(dbData), {encoding: "utf8", flag: 'w'});
+            fs.writeFileSync('db.json', JSON.stringify(dbData, null, 2), {encoding: "utf8", flag: 'w', });
 
 
             const text = fs.readFileSync('db.json', {encoding: 'utf8'});
