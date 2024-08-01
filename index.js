@@ -170,6 +170,7 @@ const fullUrl = clarisApiUrl + '/Token'
         body: JSON.stringify(payload),
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
+            // "Content-Type": "application/json",
         },
     })
         .then((response) => response.json())
