@@ -28,7 +28,28 @@ bot.on('message', async msg => {
     console.log('message', msg)
 // https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=test
 
+    //@getmyid_bot
+    // Your user ID: 311462440
+    // Current chat ID: 311462440
+
+    //masha
+    //1583946214
+
+    // отправка в чат только пользователю работает
+
     if (text === '/start') {
+
+        const str = JSON.stringify(
+            {
+                inline_keyboard: [
+                    [{text: 'Авторизация', web_app: {url: webAppUrl + '/login'}}]
+                ],
+                resize_keyboard: true
+            }
+        )
+
+        console.log('str', str)
+
 
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
