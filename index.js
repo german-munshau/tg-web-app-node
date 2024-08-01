@@ -184,7 +184,7 @@ bot.on('message', async msg => {
 app.post('/web-data', async (req, res) => {
     const {queryId, login, password} = req.body
 
-    console.log('queryId, login, password', queryId, login, password)
+    // console.log('queryId, login, password', queryId, login, password)
 
 // POST для получения токена
 
@@ -198,23 +198,22 @@ app.post('/web-data', async (req, res) => {
 //            console.log('data', data)
 
 
-            let dbData = JSON.parse(fs.readFileSync('db.json', (err, data) => (data)))
+            // let dbData = JSON.parse(fs.readFileSync('db.json', (err, data) => (data)))
 
-            // const tokenData = {
-            //     'token': data?.access_token
-            // }
-            console.log('dbData1:',dbData)
+            const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
+
+            console.log('dbData1:', dbData)
 
             dbData[chatId] = data?.access_token
 
-            console.log('dbData2:',dbData)
+            console.log('dbData2:', dbData)
 
-            console.log('dbData3:',JSON.stringify(dbData))
+            // console.log('dbData3:', JSON.stringify(dbData))
 
-            fs.writeFileSync('db.json', JSON.stringify(dbData));
+            fs.writeFileSync('db.json', JSON.stringify(dbData), {encoding: "utf8", flag: 'w'});
 
 
-            const text = fs.readFileSync('db.json', 'utf8');
+            const text = fs.readFileSync('db.json', {encoding: 'utf8'});
             console.log(JSON.parse(text));
 
             try {
