@@ -136,7 +136,7 @@ app.post('/auth', async (req, res) => {
 })
 
 // получение документа
-app.post('/document', async (req, res) => {
+app.get('/document', async (req, res) => {
 
     console.log('req.query',req.query)
     console.log('req.params',req.params)
