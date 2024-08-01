@@ -138,10 +138,10 @@ app.post('/auth', async (req, res) => {
 // получение документа
 app.get('/document/:id', async (req, res) => {
 
-    console.log('req.query',req.query)
-    console.log('req.params',req.params["id"])
+    // console.log('req.query',req.query)
+    // console.log('req.params',req.params["id"])
 
-    res.send(`document ...`)
+    res.send(`document ... ${req.params["id"]}`)
 
 })
 
