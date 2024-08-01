@@ -5,7 +5,9 @@ const cors = require('cors')
 
 const token = '5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ'
 
-const bcAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
+const webAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
+
+const clarisApiUrl = 'https://api.claris.su'
 
 const bot = new TelegramApi(token, {polling: true})
 
@@ -27,7 +29,7 @@ bot.on('message', async msg => {
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: 'Авторизация', web_app: {url: bcAppUrl + '/login'}, style: {width: 50}}]
+                    [{text: 'Авторизация', web_app: {url: webAppUrl + '/login'}, style: {width: 50}}]
                 ],
                 resize_keyboard: true
             }
@@ -52,6 +54,7 @@ bot.on('message', async msg => {
         // })
     }
 
+    // ответ для кнопки keyboard
     if (msg?.web_app_data?.data) {
         try {
             const data = JSON.parse(msg?.web_app_data?.data)
@@ -149,6 +152,31 @@ app.post('/web-data', async (req, res) => {
     const {queryId, login, password} = req.body
 
     console.log('queryId, login, password', queryId, login, password)
+
+// POST для получения токена
+
+    const payload = {
+        grant_type: 'password',
+        username: login,
+        password
+    }
+
+    // With Fetch
+    fetch(clarisApiUrl + '/Token', {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
+
+
+
+
+
     try {
         await bot.answerWebAppQuery(queryId, {
             type: 'article',
