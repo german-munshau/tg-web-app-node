@@ -39,9 +39,19 @@ bot.on('message', async msg => {
 
     if (text === '/start') {
 
+        // const str = JSON.stringify(
+        //     {
+        //         inline_keyboard: [{text: 'Согласовать'}, {text: 'Отклонить'}],
+        //         resize_keyboard: true
+        //     }
+        // )
+
+
         const str = JSON.stringify(
             {
-                inline_keyboard: [{text: 'Согласовать'}, {text: 'Отклонить'}],
+                inline_keyboard: [
+                    [{text: 'Открыть', web_app: {url: webAppUrl + '/show/123456'}}]
+                ],
                 resize_keyboard: true
             }
         )
