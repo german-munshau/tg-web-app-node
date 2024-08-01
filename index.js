@@ -195,7 +195,7 @@ app.post('/web-data', async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
-            console.log('data', data)
+//            console.log('data', data)
 
 
             let dbData = JSON.parse(fs.readFileSync('db.json', (err, data) => (data)))
@@ -205,11 +205,11 @@ app.post('/web-data', async (req, res) => {
             // }
             console.log('dbData1:',dbData)
 
-            console.log(bot)
-
             dbData[chatId] = data?.access_token
 
             console.log('dbData2:',dbData)
+
+            console.log('dbData3:',JSON.stringify(dbData))
 
             fs.writeFileSync('db.json', JSON.stringify(dbData));
 
