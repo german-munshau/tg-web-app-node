@@ -18,9 +18,10 @@ app.get('/', async (req, res) => {
     return res.send('Server is working...')
 })
 
+let chatId = ''
 
 bot.on('message', async msg => {
-    const chatId = msg.chat.id;
+    chatId = msg.chat.id;
     const text = msg.text;
 
     // console.log('chatId',chatId) // 311462440
@@ -204,8 +205,9 @@ app.post('/web-data', async (req, res) => {
             // }
             console.log('dbData1:',dbData)
 
+            console.log(bot)
 
-            dbData['chat_id'] = data?.access_token
+            dbData[chatId] = data?.access_token
 
             console.log('dbData2:',dbData)
 
