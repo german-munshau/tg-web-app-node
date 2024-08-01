@@ -1,15 +1,16 @@
 const TelegramApi = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
-
+const fs = require('fs');
 
 const token = '5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ'
-
 const webAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
-
 const clarisApiUrl = 'https://api.claris.su/main'
 
 const bot = new TelegramApi(token, {polling: true})
+
+
+
 
 const app = express()
 app.use(express.json())
@@ -25,8 +26,9 @@ bot.on('message', async msg => {
     const text = msg.text;
 
     // console.log('chatId',chatId) // 311462440
-    console.log('message', msg)
-// https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=test
+//    console.log('message', msg)
+
+  //  https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=Уведомление о документе №123456&reply_markup={"inline_keyboard":[[{"text":"Открыть","web_app":{"url":"https://incandescent-salmiakki-46088e.netlify.app/show/123456"}}]],"resize_keyboard":true}
 
     //@getmyid_bot
     // Your user ID: 311462440
@@ -46,17 +48,17 @@ bot.on('message', async msg => {
         //     }
         // )
 
-
-        const str = JSON.stringify(
-            {
-                inline_keyboard: [
-                    [{text: 'Открыть', web_app: {url: webAppUrl + '/show/123456'}}]
-                ],
-                resize_keyboard: true
-            }
-        )
-
-        console.log('str', str)
+        //
+        // const str = JSON.stringify(
+        //     {
+        //         inline_keyboard: [
+        //             [{text: 'Открыть', web_app: {url: webAppUrl + '/show/123456'}}]
+        //         ],
+        //         resize_keyboard: true
+        //     }
+        // )
+        //
+        // console.log('str', str)
 
 
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
@@ -195,6 +197,21 @@ app.post('/web-data', async (req, res) => {
         .then((response) => response.json())
         .then(async (data) => {
             console.log('data', data)
+
+
+
+            const dbData = JSON.parse(fs.readFileSync('db.json', (err, data) => (data)))
+
+            const tokenData = {
+                'token': data?.access_token
+            }
+
+            fs.writeFileSync('data.json', JSON.stringify([...dbData, ...tokenData]));
+
+
+            const text = fs.readFileSync('db.json', 'utf8');
+            console.log(JSON.parse(text));
+
             try {
                 await bot.answerWebAppQuery(queryId, {
                     type: 'article',
