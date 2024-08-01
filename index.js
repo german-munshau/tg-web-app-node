@@ -117,19 +117,18 @@ app.post('/auth', async (req, res) => {
         body: `grant_type=password&username=${login}&password=${password}`,
         headers: {"Content-Type": "application/x-www-form-urlencoded",},
     })
-        .then((response) => {
-            console.log('step 1')
-            return response.json()
-        })
+        .then((response) => response.json())
         .then(async (data) => {
 
-            console.log('step 2')
+            console.log('data',data)
+
+            // запись токена в файл
             const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
             dbData[chatId] = data?.access_token
-            fs.writeFileSync('db.json', JSON.stringify(dbData, null, 2), {encoding: "utf8", flag: 'w', });
-            console.log('step 4')
+            fs.writeFileSync('db.json', JSON.stringify(dbData, null, 2), {encoding: "utf8", flag: 'w',});
+
+            // ответ на бота
             try {
-                console.log('step 5')
                 await bot.answerWebAppQuery(queryId, {
                     type: 'article',
                     id: queryId,
@@ -140,7 +139,6 @@ app.post('/auth', async (req, res) => {
                 })
                 return res.status(200).json({})
             } catch (e) {
-                console.log('step 6')
                 return res.status(500).json({})
             }
 
