@@ -40,26 +40,6 @@ bot.on('message', async msg => {
 
     if (text === '/start') {
 
-        // const str = JSON.stringify(
-        //     {
-        //         inline_keyboard: [{text: 'Согласовать'}, {text: 'Отклонить'}],
-        //         resize_keyboard: true
-        //     }
-        // )
-
-        //
-        // const str = JSON.stringify(
-        //     {
-        //         inline_keyboard: [
-        //             [{text: 'Открыть', web_app: {url: webAppUrl + '/show/123456'}}]
-        //         ],
-        //         resize_keyboard: true
-        //     }
-        // )
-        //
-        // console.log('str', str)
-
-
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
                 inline_keyboard: [
@@ -119,9 +99,9 @@ const getMessageText = (message) => {
 
 
 app.post('/auth', async (req, res) => {
-
     const {queryId, login, password} = req.body
 
+    // получение токена
     fetch(clarisApiUrl + '/Token', {
         method: "POST",
         body: `grant_type=password&username=${login}&password=${password}`,
@@ -129,8 +109,6 @@ app.post('/auth', async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
-
-            console.log(data)
 
             // запись токена в файл
             const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
@@ -144,7 +122,6 @@ app.post('/auth', async (req, res) => {
                     id: queryId,
                     title: 'Ответ от бота',
                     input_message_content: {
-                        // message_text: `login: ${login}, password: ${password}, token: ${data?.access_token}`,
                         message_text: getMessageText(data),
                     }
                 })
@@ -152,15 +129,22 @@ app.post('/auth', async (req, res) => {
             } catch (e) {
                 return res.status(500).json({})
             }
-
         })
         .catch(async (error) => {
-            console.log('step 3')
             console.error(error)
         });
+})
 
+// получение документа
+app.post('/document', async (req, res) => {
+
+    console.log('req.query',req.query)
+    console.log('req.params',req.params)
+
+    res.send(`document ...`)
 
 })
+
 
 const PORT = 8000
 
