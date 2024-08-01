@@ -108,6 +108,16 @@ bot.on('message', async msg => {
 
 })
 
+const getMessageText = (message) => {
+    if (message?.error === 'invalid_grant') {
+        return 'Введен неправильный логин или пароль'
+    } else if (message?.access_token) {
+        return `Вы авторизованы, ${message.login}`
+    }
+    return 'Ошибка сервера'
+}
+
+
 app.post('/auth', async (req, res) => {
 
     const {queryId, login, password} = req.body
@@ -119,8 +129,6 @@ app.post('/auth', async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
-
-            console.log('data',data)
 
             // запись токена в файл
             const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
@@ -134,7 +142,8 @@ app.post('/auth', async (req, res) => {
                     id: queryId,
                     title: 'Ответ от бота',
                     input_message_content: {
-                        message_text: `login: ${login}, password: ${password}, token: ${data?.access_token}`,
+                        // message_text: `login: ${login}, password: ${password}, token: ${data?.access_token}`,
+                        message_text: getMessageText(data),
                     }
                 })
                 return res.status(200).json({})
