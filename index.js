@@ -161,6 +161,9 @@ app.post('/web-data', async (req, res) => {
     }
 
 const fullUrl = clarisApiUrl + '/Token'
+
+    console.log('fullUrl',fullUrl)
+
     // With Fetch
     fetch(fullUrl, {
         method: "POST",
