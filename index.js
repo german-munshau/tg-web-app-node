@@ -112,7 +112,7 @@ const getMessageText = (message) => {
     if (message?.error === 'invalid_grant') {
         return 'Введен неправильный логин или пароль'
     } else if (message?.access_token) {
-        return 'Вы авторизованы'
+        return `Вы авторизованы, ${message.user_name}`
     }
     return 'Ошибка сервера'
 }
