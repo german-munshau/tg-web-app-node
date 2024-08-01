@@ -108,85 +108,9 @@ bot.on('message', async msg => {
 
 })
 
+app.post('/auth', async (req, res) => {
 
-// bot.on('message', async msg => {
-//     const chatId = msg.chat.id;
-//     const text = msg.text;
-//
-//     if (text === '/start') {
-//         await bot.sendMessage(chatId, `Заполни форму`, {
-//             reply_markup: {
-//                 keyboard: [
-//                     [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
-//                 ]
-//             }
-//         })
-//
-//         await bot.sendMessage(chatId, `Заполни форму`, {
-//             reply_markup: {
-//                 inline_keyboard: [
-//                     // [{text: 'Yandex page inline', web_app: {url: yaUrl}}],
-//                     [{text: 'Показать список', web_app: {url: webAppUrl}}]
-//                 ]
-//             }
-//         })
-//     }
-//
-//     if (msg?.web_app_data?.data) {
-//         try {
-//             const data = JSON.parse(msg?.web_app_data?.data)
-//
-//             await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
-//             await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
-//
-//             setTimeout(async () => {
-//                 await bot.sendMessage(chatId, 'Спасибо за обратную связь')
-//             }, 3000)
-//         } catch (e) {
-//             console.log(e)
-//         }
-//     }
-//
-//
-// })
-
-// app.post('/web-data', async (req, res) => {
-//     const {queryId, products, totalPrice} = req.body
-//     try {
-//         await bot.answerWebAppQuery(queryId, {
-//             type: 'article',
-//             id: queryId,
-//             title: 'Успешная покупка',
-//             input_message_content: {
-//                 message_text: 'Поздравляю, вы приобрели товар на сумму ' + totalPrice
-//             }
-//
-//         })
-//
-//         return res.status(200).json({})
-//     } catch (e) {
-//         await bot.answerWebAppQuery(queryId, {
-//             type: 'article',
-//             id: queryId,
-//             title: 'Не удалось приобрести товар',
-//             input_message_content: {
-//                 message_text: 'Не удалось приобрести товар'
-//             }
-//
-//         })
-//         return res.status(500).json({})
-//     }
-//
-//
-// })
-
-
-app.post('/web-data', async (req, res) => {
     const {queryId, login, password} = req.body
-
-    // console.log('queryId, login, password', queryId, login, password)
-
-// POST для получения токена
 
     fetch(clarisApiUrl + '/Token', {
         method: "POST",
@@ -195,26 +119,10 @@ app.post('/web-data', async (req, res) => {
     })
         .then((response) => response.json())
         .then(async (data) => {
-//            console.log('data', data)
-
-
-            // let dbData = JSON.parse(fs.readFileSync('db.json', (err, data) => (data)))
 
             const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
-
-            console.log('dbData1:', dbData)
-
             dbData[chatId] = data?.access_token
-
-            console.log('dbData2:', dbData)
-
-            // console.log('dbData3:', JSON.stringify(dbData))
-
             fs.writeFileSync('db.json', JSON.stringify(dbData, null, 2), {encoding: "utf8", flag: 'w', });
-
-
-            const text = fs.readFileSync('db.json', {encoding: 'utf8'});
-            console.log(JSON.parse(text));
 
             try {
                 await bot.answerWebAppQuery(queryId, {
