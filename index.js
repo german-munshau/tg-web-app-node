@@ -41,9 +41,7 @@ bot.on('message', async msg => {
 
         const str = JSON.stringify(
             {
-                inline_keyboard: [
-                    [{text: 'Авторизация', web_app: {url: webAppUrl + '/login'}}]
-                ],
+                inline_keyboard: [{text: 'Согласовать'}, {text: 'Отклонить'}],
                 resize_keyboard: true
             }
         )
