@@ -154,56 +154,47 @@ app.post('/web-data', async (req, res) => {
 
 // POST для получения токена
 
-    // const payload = {
-    //     grant_type: 'password',
-    //     username: login,
-    //     password
-    // }
-
-    const fullUrl = clarisApiUrl + '/Token'
-
-    console.log('fullUrl', fullUrl)
-
-    // With Fetch
-    fetch(fullUrl, {
+    fetch(clarisApiUrl + '/Token', {
         method: "POST",
-        // body: JSON.stringify(payload),
         body: `grant_type=password&username=${login}&password=${password}`,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            // "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/x-www-form-urlencoded",},
     })
         .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error(error));
-
-
-    try {
-        await bot.answerWebAppQuery(queryId, {
-            type: 'article',
-            id: queryId,
-            title: 'Ответ от бота',
-            input_message_content: {
-                message_text: `login: ${login}, password: ${password}`,
+        .then(async (data) => {
+            // console.log(data?.access_token)
+            try {
+                await bot.answerWebAppQuery(queryId, {
+                    type: 'article',
+                    id: queryId,
+                    title: 'Ответ от бота',
+                    input_message_content: {
+                        message_text: `login: ${login}, password: ${password}, token: ${data?.access_token}`,
+                    }
+                })
+                return res.status(200).json({})
+            } catch (e) {
+                return res.status(500).json({})
             }
 
         })
-        return res.status(200).json({})
+        .catch(async (error) => {
+            console.error(error)
+            try {
+                await bot.answerWebAppQuery(queryId, {
+                    type: 'article',
+                    id: queryId,
+                    title: 'Ответ от бота',
+                    input_message_content: {
+                        message_text: `error: ${error.error_description}`,
+                    }
+                })
+                return res.status(200).json({})
+            } catch (e) {
+                return res.status(500).json({})
+            }
 
-    } catch (e) {
 
-        // await bot.answerWebAppQuery(queryId, {
-        //     type: 'article',
-        //     id: queryId,
-        //     title: 'Не удалось приобрести товар',
-        //     input_message_content: {
-        //         message_text: 'Не удалось приобрести товар'
-        //     }
-        //
-        // })
-        return res.status(500).json({})
-    }
+        });
 
 
 })
