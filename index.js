@@ -154,20 +154,21 @@ app.post('/web-data', async (req, res) => {
 
 // POST для получения токена
 
-    const payload = {
-        grant_type: 'password',
-        username: login,
-        password
-    }
+    // const payload = {
+    //     grant_type: 'password',
+    //     username: login,
+    //     password
+    // }
 
-const fullUrl = clarisApiUrl + '/Token'
+    const fullUrl = clarisApiUrl + '/Token'
 
-    console.log('fullUrl',fullUrl)
+    console.log('fullUrl', fullUrl)
 
     // With Fetch
     fetch(fullUrl, {
         method: "POST",
-        body: JSON.stringify(payload),
+        // body: JSON.stringify(payload),
+        body: `grant_type=password&username=${login}&password=${password}`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             // "Content-Type": "application/json",
