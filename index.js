@@ -24,7 +24,9 @@ bot.on('message', async msg => {
     const chatId = msg.chat.id;
     const text = msg.text;
 
-    console.log('chatId',chatId)
+    // console.log('chatId',chatId) // 311462440
+    console.log('message', msg)
+// https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=test
 
     if (text === '/start') {
 
