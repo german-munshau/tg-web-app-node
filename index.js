@@ -177,13 +177,17 @@ app.get('/documentDetails/:id', async (req, res) => {
 })
 // Согласовать документ
 app.post('/document/:id/agree', async (req, res) => {
+
     const {comment} = req.body
     const url = `${clarisApiUrl}/vNext/v1/documents/${req.params["id"]}/agree`
+
+    console.log('comment',comment)
+    console.log('url',url)
 
     const response = await fetch(url, getOptions('POST', {comment}))
 
     if (response.ok) {
-        const data = await response.json()
+    //    const data = await response.json()
         // console.log('document', data)
         return res.status(200).json(data)
     } else if (response.status === 401) {
