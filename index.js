@@ -138,15 +138,41 @@ app.post('/auth', async (req, res) => {
 // получение документа
 app.get('/document/:id', async (req, res) => {
 
-    // console.log('req.query',req.query)
-    // console.log('req.params',req.params["id"])
+    // https://api.claris.su/main/vNext/v1/documents/4743762148000
 
-    // res.send(`document ... ${req.params["id"]}`)
-    const data = {
-        id: req.params["id"]
+    // получение токена
+    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
+
+    const token = dbData[chatId]
+
+    const url = clarisApiUrl + '/vNext/v1/documents/' + req.params["id"]
+
+    console.log('url', url)
+
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer ' + token,
+        }
     }
 
-    return res.json(data)
+    console.log('options', options)
+
+    fetch(url, options)
+        .then((response) => response.json())
+        .then(data => {
+            console.log('data', data)
+
+            return res.status(200).json(data)
+        })
+
+
+    // const data = {
+    //     id: req.params["id"]
+    // }
+    //
+    // return res.json(data)
 })
 
 
