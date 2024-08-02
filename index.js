@@ -181,19 +181,19 @@ app.post('/document/:id/agree', async (req, res) => {
     const {comment} = req.body
     const url = `${clarisApiUrl}/vNext/v1/documents/${req.params["id"]}/agree`
 
-    console.log('comment', comment)
+    // console.log('comment', comment)
     console.log('url', url)
 
     const options = getOptions('POST', {comment})
-    console.log('options',options)
+    // console.log('options',options)
     try {
         const response = await fetch(url, getOptions('POST', {comment}))
-        console.log('response', response.status)
+        console.log('response', response.json())
 
         if (response.ok) {
             return res.status(200).json(data)
         } else {
-            console.log('else:', response.status)
+            // console.log('else:', response.status)
             return res.status(response.status).json({})
         }
     } catch (e) {
