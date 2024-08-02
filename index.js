@@ -154,7 +154,7 @@ app.get('/document/:id', async (req, res) => {
     const response = await fetch(url, getOptions('GET'))
     if (response.ok) {
         const data = await response.json()
-        console.log('document', data)
+        // console.log('document', data)
         return res.status(200).json(data)
     } else if (response.status === 401) {
         console.log(response.status)
@@ -168,7 +168,7 @@ app.get('/documentDetails/:id', async (req, res) => {
     const response = await fetch(url, getOptions('GET'))
     if (response.ok) {
         const data = await response.json()
-        console.log('details', data)
+        // console.log('details', data)
         return res.status(200).json(data)
     } else if (response.status === 401) {
         console.log(response.status)
@@ -181,19 +181,24 @@ app.post('/document/:id/agree', async (req, res) => {
     const {comment} = req.body
     const url = `${clarisApiUrl}/vNext/v1/documents/${req.params["id"]}/agree`
 
-    console.log('comment',comment)
-    console.log('url',url)
+    console.log('comment', comment)
+    console.log('url', url)
 
-    const response = await fetch(url, getOptions('POST', {comment}))
-
-    if (response.ok) {
-    //    const data = await response.json()
-        // console.log('document', data)
-        return res.status(200).json(data)
-    } else if (response.status === 401) {
-        console.log(response.status)
-        return res.status(response.status).json({})
+    try {
+        const response = await fetch(url, getOptions('POST', {comment}))
+        console.log('response', response)
+        if (response.ok) {
+            return res.status(200).json(data)
+        } else {
+            console.log(response.status)
+            return res.status(response.status).json({})
+        }
+    } catch (e) {
+        console.log(e)
+        return res.status(500).json(data)
     }
+
+
 })
 
 // Отклонить документ
