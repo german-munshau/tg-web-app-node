@@ -156,14 +156,13 @@ app.get('/document/:id', async (req, res) => {
     const response = await fetch(url, options)
 
     if (response.ok) {
-        const data = response.json()
-        console.log('data',data)
+        const data = await response.json()
+        console.log('data', data)
         return res.status(200).json(data)
     } else if (response.status === 401) {
         console.log(response.status)
         return res.status(response.status).json({})
     }
-
 
 
     // fetch(url, options)
