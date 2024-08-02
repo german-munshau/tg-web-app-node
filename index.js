@@ -144,11 +144,7 @@ app.get('/document/:id', async (req, res) => {
     const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
 
     const token = dbData[chatId]
-
     const url = clarisApiUrl + '/vNext/v1/documents/' + req.params["id"]
-
-    console.log('url', url)
-
     const options = {
         method: "GET",
         headers: {
@@ -157,8 +153,6 @@ app.get('/document/:id', async (req, res) => {
         }
     }
 
-    console.log('options', options)
-
     fetch(url, options)
         .then((response) => response.json())
         .then(data => {
@@ -166,13 +160,10 @@ app.get('/document/:id', async (req, res) => {
 
             return res.status(200).json(data)
         })
+        .catch(e => {
+            console.log(e)
+        })
 
-
-    // const data = {
-    //     id: req.params["id"]
-    // }
-    //
-    // return res.json(data)
 })
 
 
