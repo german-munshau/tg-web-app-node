@@ -184,13 +184,16 @@ app.post('/document/:id/agree', async (req, res) => {
     console.log('comment', comment)
     console.log('url', url)
 
+    const options = getOptions('POST', {comment})
+    console.log('options',options)
     try {
         const response = await fetch(url, getOptions('POST', {comment}))
-        console.log('response', response)
+        console.log('response', response.status)
+
         if (response.ok) {
             return res.status(200).json(data)
         } else {
-            console.log(response.status)
+            console.log('else:', response.status)
             return res.status(response.status).json({})
         }
     } catch (e) {
