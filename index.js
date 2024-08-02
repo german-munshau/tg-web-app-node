@@ -157,8 +157,9 @@ app.get('/document/:id', async (req, res) => {
 
     if (response.ok) {
         const data = response.json()
+        console.log('data',data)
         return res.status(200).json(data)
-    } else {
+    } else if (response.status === 401) {
         console.log(response.status)
         return res.status(response.status).json({})
     }
