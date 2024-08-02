@@ -106,7 +106,7 @@ const getOptions = (method, data) => {
             "Content-Type": "application/json",
             "Authorization": 'Bearer ' + token,
         },
-        data
+        // data
     }
 }
 
@@ -190,6 +190,8 @@ app.post('/document/:id/agree', async (req, res) => {
         const response = await fetch(url, getOptions('POST', {comment}))
         console.log('response', await response.json())
 
+        // ошибка
+        //  response { message: 'An error has occurred.' }
         if (response.ok) {
             return res.status(200).json(data)
         } else {
