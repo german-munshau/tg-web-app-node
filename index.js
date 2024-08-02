@@ -97,6 +97,17 @@ const getMessageText = (message) => {
     return 'Ошибка сервера'
 }
 
+const getOptions = () => {
+    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
+    const token = dbData[chatId]
+    return {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer ' + token,
+        }
+    }
+}
 
 app.post('/auth', async (req, res) => {
     const {queryId, login, password} = req.body
@@ -135,53 +146,54 @@ app.post('/auth', async (req, res) => {
         });
 })
 
+
 // получение документа
 app.get('/document/:id', async (req, res) => {
 
     // https://api.claris.su/main/vNext/v1/documents/4743762148000
 
     // получение токена
-    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
+    // const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
 
-    const token = dbData[chatId]
+    // const token = dbData[chatId]
     const url = clarisApiUrl + '/vNext/v1/documents/' + req.params["id"]
-    const options = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": 'Bearer ' + token,
-        }
-    }
-
-    const response = await fetch(url, options)
+    // const options = {
+    //     method: "GET",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "Authorization": 'Bearer ' + token,
+    //     }
+    // }
+    const response = await fetch(url, getOptions())
 
     if (response.ok) {
         const data = await response.json()
-        console.log('data', data)
+        console.log('document', data)
         return res.status(200).json(data)
     } else if (response.status === 401) {
         console.log(response.status)
         return res.status(response.status).json({})
     }
+})
+
+//получение деталей документа
+app.get('/documentDetails/:id', async (req, res) => {
 
 
-    // fetch(url, options)
-    //     .then((response) => {
-    //
-    //
-    //         console.log(response.status)
-    //
-    //         return response.json()
-    //     })
-    //     .then(data => {
-    //         console.log('data', data)
-    //
-    //         return res.status(200).json(data)
-    //     })
-    //     .catch(e => {
-    //         console.log(e)
-    //     })
+//agreementHistories?pageSize=10&pageNumber=1&orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id%3D%224743762148000%22&includeMeta=totalCount,pageInfo,
 
+    const url = `${clarisApiUrl}/vNext/v1/agreementHistories?orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id="${req.params["id"]}"`
+
+    const response = await fetch(url, getOptions())
+
+    if (response.ok) {
+        const data = await response.json()
+        console.log('details', data)
+        return res.status(200).json(data)
+    } else if (response.status === 401) {
+        console.log(response.status)
+        return res.status(response.status).json({})
+    }
 })
 
 
