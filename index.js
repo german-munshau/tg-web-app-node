@@ -153,19 +153,34 @@ app.get('/document/:id', async (req, res) => {
         }
     }
 
-    fetch(url, options)
-        .then((response) => {
-            console.log(response.status)
-            return response.json()
-        })
-        .then(data => {
-            console.log('data', data)
+    const response = await fetch(url, options)
 
-            return res.status(200).json(data)
-        })
-        .catch(e => {
-            console.log(e)
-        })
+    if (response.ok) {
+        const data = response.json()
+        return res.status(200).json(data)
+    } else {
+        console.log(response.status)
+        return res.status(response.status).json({})
+    }
+
+
+
+    // fetch(url, options)
+    //     .then((response) => {
+    //
+    //
+    //         console.log(response.status)
+    //
+    //         return response.json()
+    //     })
+    //     .then(data => {
+    //         console.log('data', data)
+    //
+    //         return res.status(200).json(data)
+    //     })
+    //     .catch(e => {
+    //         console.log(e)
+    //     })
 
 })
 
