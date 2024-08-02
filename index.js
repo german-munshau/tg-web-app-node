@@ -154,7 +154,10 @@ app.get('/document/:id', async (req, res) => {
     }
 
     fetch(url, options)
-        .then((response) => response.json())
+        .then((response) => {
+            console.log(response.status)
+            return response.json()
+        })
         .then(data => {
             console.log('data', data)
 
