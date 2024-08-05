@@ -97,11 +97,11 @@ const getMessageText = (message) => {
     return 'Ошибка сервера'
 }
 
-const getOptions = (method) => {
+const getOptions = () => {
     const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
     const token = dbData[chatId]
     return {
-        method,
+        method: 'GET',
         headers: {
             "Content-Type": "application/json",
             "Authorization": 'Bearer ' + token,
@@ -150,7 +150,7 @@ app.post('/auth', async (req, res) => {
 // получение документа
 app.get('/document/:id', async (req, res) => {
     const url = clarisApiUrl + '/vNext/v1/documents/' + req.params["id"]
-    const response = await fetch(url, getOptions('GET'))
+    const response = await fetch(url, getOptions())
     if (response.ok) {
         const data = await response.json()
         // console.log('document', data)
@@ -164,7 +164,7 @@ app.get('/document/:id', async (req, res) => {
 //получение деталей документа
 app.get('/documentDetails/:id', async (req, res) => {
     const url = `${clarisApiUrl}/vNext/v1/agreementHistories?orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id="${req.params["id"]}"`
-    const response = await fetch(url, getOptions('GET'))
+    const response = await fetch(url, getOptions())
     if (response.ok) {
         const data = await response.json()
         // console.log('details', data)
@@ -175,17 +175,17 @@ app.get('/documentDetails/:id', async (req, res) => {
     }
 })
 
-const postOptions = (method, data) => {
-    console.log('data',data)
+const postOptions = (data) => {
+    console.log('data', data)
     const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
     const token = dbData[chatId]
     return {
-        method,
+        method: 'POST',
         headers: {
             "Content-Type": "application/json",
             "Authorization": 'Bearer ' + token,
         },
-        body: JSON.stringify({comment: 'test'})
+        body: JSON.stringify(data)
     }
 }
 
@@ -195,23 +195,13 @@ app.post('/document/:id/agree', async (req, res) => {
     const {comment} = req.body
     const url = `${clarisApiUrl}/vNext/v1/documents/${req.params["id"]}/agree`
 
-    // console.log('comment', comment)
-    console.log('url', url)
-
-    const options = postOptions('POST', {comment})
-    console.log('options', options)
     try {
-        const response = await fetch(url, options)
-     //   console.log('response:', await response.json())
-
-        // ошибка
-        //  response { message: 'An error has occurred.' }
+        const response = await fetch(url, postOptions({comment}))
         if (response.ok) {
             console.log('OK!')
             return res.status(200).json({})
         } else {
-            console.log('ERROR')
-            console.log('else:', response.status)
+            console.log('ERROR: ' + response.status)
             return res.status(response.status).json({})
         }
     } catch (e) {
@@ -226,16 +216,21 @@ app.post('/document/:id/agree', async (req, res) => {
 app.post('/document/:id/disagree', async (req, res) => {
     const {comment} = req.body
     const url = `${clarisApiUrl}/vNext/v1/documents/${req.params["id"]}/disagree`
-    const response = await fetch(url, getOptions('POST', {comment}))
 
-    if (response.ok) {
-        const data = await response.json()
-        // console.log('document', data)
-        return res.status(200).json(data)
-    } else if (response.status === 401) {
-        console.log(response.status)
-        return res.status(response.status).json({})
+    try {
+        const response = await fetch(url, postOptions({comment}))
+        if (response.ok) {
+            console.log('OK!')
+            return res.status(200).json({})
+        } else {
+            console.log('ERROR: ' + response.status)
+            return res.status(response.status).json({})
+        }
+    } catch (e) {
+        console.log(e)
+        return res.status(500).json({})
     }
+
 })
 const PORT = 8000
 
