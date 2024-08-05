@@ -202,7 +202,7 @@ app.post('/document/:id/agree', async (req, res) => {
     console.log('options', options)
     try {
         const response = await fetch(url, options)
-        console.log('response:', await response.json())
+     //   console.log('response:', await response.json())
 
         // ошибка
         //  response { message: 'An error has occurred.' }
