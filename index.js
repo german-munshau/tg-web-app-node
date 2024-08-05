@@ -185,7 +185,7 @@ app.post('/document/:id/agree', async (req, res) => {
     console.log('url', url)
 
     const options = getOptions('POST', {comment})
-    // console.log('options',options)
+    console.log('options',options)
     try {
         const response = await fetch(url, options)
         console.log('response:', await response.json())
@@ -197,7 +197,7 @@ app.post('/document/:id/agree', async (req, res) => {
             return res.status(200).json({})
         } else {
             console.log('ERROR')
-            // console.log('else:', response.status)
+            console.log('else:', response.status)
             return res.status(response.status).json({})
         }
     } catch (e) {
