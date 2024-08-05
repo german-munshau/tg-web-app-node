@@ -193,7 +193,7 @@ app.post('/document/:id/agree', async (req, res) => {
         // ошибка
         //  response { message: 'An error has occurred.' }
         if (response.ok) {
-            console.log('OK')
+            console.log('OK!')
             return res.status(200).json({})
         } else {
             console.log('ERROR')
