@@ -24,9 +24,6 @@ bot.on('message', async msg => {
     chatId = msg.chat.id;
     const text = msg.text;
 
-    // console.log('chatId',chatId) // 311462440
-//    console.log('message', msg)
-
     //  https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=Уведомление о документе №123456&reply_markup={"inline_keyboard":[[{"text":"Открыть","web_app":{"url":"https://incandescent-salmiakki-46088e.netlify.app/show/123456"}}]],"resize_keyboard":true}
 
     //@getmyid_bot
@@ -36,10 +33,8 @@ bot.on('message', async msg => {
     //masha
     //1583946214
 
-    // отправка в чат только пользователю работает
 
     if (text === '/start') {
-
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
                 inline_keyboard: [
@@ -48,44 +43,24 @@ bot.on('message', async msg => {
                 resize_keyboard: true
             }
         })
-
-        // await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
-        //     reply_markup: {
-        //         keyboard: [
-        //             [{text: 'Авторизация', web_app: {url: bcAppUrl + '/login'}, style:{width: 50}}]
-        //         ],
-        //         resize_keyboard: true
-        //     }
-        // })
-
-        // await bot.sendMessage(chatId, `Заполни форму`, {
-        //     reply_markup: {
-        //         inline_keyboard: [
-        //             // [{text: 'Yandex page inline', web_app: {url: yaUrl}}],
-        //             [{text: 'Показать список', web_app: {url: webAppUrl}}]
-        //         ]
-        //     }
-        // })
     }
 
     // ответ для кнопки keyboard
-    if (msg?.web_app_data?.data) {
-        try {
-            const data = JSON.parse(msg?.web_app_data?.data)
-
-            // отправка реквизитов для получения токена
-            await bot.sendMessage(chatId, 'логин: ' + data?.login)
-            await bot.sendMessage(chatId, 'пароль: ' + data?.password)
-
-            setTimeout(async () => {
-                await bot.sendMessage(chatId, 'Спасибо за обратную связь')
-            }, 1000)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-
+    // if (msg?.web_app_data?.data) {
+    //     try {
+    //         const data = JSON.parse(msg?.web_app_data?.data)
+    //
+    //         // отправка реквизитов для получения токена
+    //         await bot.sendMessage(chatId, 'логин: ' + data?.login)
+    //         await bot.sendMessage(chatId, 'пароль: ' + data?.password)
+    //
+    //         setTimeout(async () => {
+    //             await bot.sendMessage(chatId, 'Спасибо за обратную связь')
+    //         }, 1000)
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 })
 
 const getMessageText = (message) => {
@@ -106,6 +81,20 @@ const getOptions = () => {
             "Content-Type": "application/json",
             "Authorization": 'Bearer ' + token,
         },
+    }
+}
+
+const postOptions = (data) => {
+    console.log('data', data)
+    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
+    const token = dbData[chatId]
+    return {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer ' + token,
+        },
+        body: JSON.stringify(data)
     }
 }
 
@@ -177,10 +166,7 @@ app.get('/agreementHistory/:id', async (req, res) => {
 
 //получение позиций в документе
 app.get('/documentPositions/:id', async (req, res) => {
-    // const url = `${clarisApiUrl}/vNext/v1/documentPositions?orderBy=date+desc&filterBy=document.id="${req.params["id"]}"`
-
     const url = `${clarisApiUrl}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
-    //https://api.claris.su/main/vNext/v1/documentPositions?filterBy=document.id="5054870074000"
 
     const response = await fetch(url, getOptions())
     if (response.ok) {
@@ -192,21 +178,6 @@ app.get('/documentPositions/:id', async (req, res) => {
         return res.status(response.status).json({})
     }
 })
-
-
-const postOptions = (data) => {
-    console.log('data', data)
-    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
-    const token = dbData[chatId]
-    return {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": 'Bearer ' + token,
-        },
-        body: JSON.stringify(data)
-    }
-}
 
 // Согласовать документ
 app.post('/document/:id/agree', async (req, res) => {
