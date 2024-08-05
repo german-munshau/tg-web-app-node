@@ -184,7 +184,7 @@ app.post('/document/:id/agree', async (req, res) => {
     // console.log('comment', comment)
     console.log('url', url)
 
-    const options = getOptions('POST', JSON.stringify({comment}))
+    const options = getOptions('POST', {comment})
     // console.log('options',options)
     try {
         const response = await fetch(url, options)
