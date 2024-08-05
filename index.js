@@ -109,6 +109,7 @@ const getOptions = () => {
     }
 }
 
+// авторизация
 app.post('/auth', async (req, res) => {
     const {queryId, login, password} = req.body
 
@@ -146,7 +147,6 @@ app.post('/auth', async (req, res) => {
         });
 })
 
-
 // получение документа
 app.get('/document/:id', async (req, res) => {
     const url = clarisApiUrl + '/vNext/v1/documents/' + req.params["id"]
@@ -161,8 +161,8 @@ app.get('/document/:id', async (req, res) => {
     }
 })
 
-//получение деталей документа
-app.get('/documentDetails/:id', async (req, res) => {
+//получение истории согласования
+app.get('/agreementHistory/:id', async (req, res) => {
     const url = `${clarisApiUrl}/vNext/v1/agreementHistories?orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id="${req.params["id"]}"`
     const response = await fetch(url, getOptions())
     if (response.ok) {
@@ -174,6 +174,25 @@ app.get('/documentDetails/:id', async (req, res) => {
         return res.status(response.status).json({})
     }
 })
+
+//получение позиций в документе
+app.get('/documentPositions/:id', async (req, res) => {
+    // const url = `${clarisApiUrl}/vNext/v1/documentPositions?orderBy=date+desc&filterBy=document.id="${req.params["id"]}"`
+
+    const url = `${clarisApiUrl}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
+    //https://api.claris.su/main/vNext/v1/documentPositions?filterBy=document.id="5054870074000"
+
+    const response = await fetch(url, getOptions())
+    if (response.ok) {
+        const data = await response.json()
+        console.log('positions', data)
+        return res.status(200).json(data)
+    } else if (response.status === 401) {
+        console.log(response.status)
+        return res.status(response.status).json({})
+    }
+})
+
 
 const postOptions = (data) => {
     console.log('data', data)
