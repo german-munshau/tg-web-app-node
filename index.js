@@ -106,7 +106,10 @@ const getOptions = (method, data) => {
             "Content-Type": "application/json",
             "Authorization": 'Bearer ' + token,
         },
-        body: data
+        // body: data
+        body: JSON.stringify({
+            "comment": "telegram agree"
+        })
     }
 }
 
