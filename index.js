@@ -119,9 +119,7 @@ const postOptions = (method, data) => {
             "Authorization": 'Bearer ' + token,
         },
         // body: data
-        body: JSON.stringify({
-            "comment": "telegram agree"
-        })
+        body: JSON.stringify({comment: 'telegram agree'})
     }
 }
 
