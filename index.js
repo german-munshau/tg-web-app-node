@@ -106,7 +106,7 @@ const getOptions = (method, data) => {
             "Content-Type": "application/json",
             "Authorization": 'Bearer ' + token,
         },
-        // data
+        data
     }
 }
 
