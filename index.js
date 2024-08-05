@@ -109,20 +109,6 @@ const getOptions = (method) => {
     }
 }
 
-const postOptions = (method, data) => {
-    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
-    const token = dbData[chatId]
-    return {
-        method,
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": 'Bearer ' + token,
-        },
-        // body: data
-        body: JSON.stringify({comment: 'telegram agree'})
-    }
-}
-
 app.post('/auth', async (req, res) => {
     const {queryId, login, password} = req.body
 
@@ -188,6 +174,21 @@ app.get('/documentDetails/:id', async (req, res) => {
         return res.status(response.status).json({})
     }
 })
+
+const postOptions = (method, data) => {
+    console.log('data',data)
+    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
+    const token = dbData[chatId]
+    return {
+        method,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer ' + token,
+        },
+        body: JSON.stringify({comment: 'test'})
+    }
+}
+
 // Согласовать документ
 app.post('/document/:id/agree', async (req, res) => {
 
@@ -198,7 +199,7 @@ app.post('/document/:id/agree', async (req, res) => {
     console.log('url', url)
 
     const options = postOptions('POST', {comment})
-    console.log('options',options)
+    console.log('options', options)
     try {
         const response = await fetch(url, options)
         console.log('response:', await response.json())
