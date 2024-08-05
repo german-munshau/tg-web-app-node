@@ -97,7 +97,19 @@ const getMessageText = (message) => {
     return 'Ошибка сервера'
 }
 
-const getOptions = (method, data) => {
+const getOptions = (method) => {
+    const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
+    const token = dbData[chatId]
+    return {
+        method,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer ' + token,
+        },
+    }
+}
+
+const postOptions = (method, data) => {
     const dbData = JSON.parse(fs.readFileSync('db.json', {encoding: 'utf8'}))
     const token = dbData[chatId]
     return {
@@ -187,7 +199,7 @@ app.post('/document/:id/agree', async (req, res) => {
     // console.log('comment', comment)
     console.log('url', url)
 
-    const options = getOptions('POST', {comment})
+    const options = postOptions('POST', {comment})
     console.log('options',options)
     try {
         const response = await fetch(url, options)
