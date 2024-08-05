@@ -184,23 +184,25 @@ app.post('/document/:id/agree', async (req, res) => {
     // console.log('comment', comment)
     console.log('url', url)
 
-    const options = getOptions('POST', {comment})
+    const options = getOptions('POST',  JSON.stringify({comment}))
     // console.log('options',options)
     try {
-        const response = await fetch(url, getOptions('POST', {comment}))
+        const response = await fetch(url, options)
         console.log('response', await response.json())
 
         // ошибка
         //  response { message: 'An error has occurred.' }
         if (response.ok) {
-            return res.status(200).json(data)
+            console.log('OK')
+            return res.status(200).json({})
         } else {
+            console.log('ERROR')
             // console.log('else:', response.status)
             return res.status(response.status).json({})
         }
     } catch (e) {
         console.log(e)
-        return res.status(500).json(data)
+        return res.status(500).json({})
     }
 
 
