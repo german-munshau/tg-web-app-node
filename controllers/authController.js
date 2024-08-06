@@ -20,12 +20,17 @@ class DocumentController {
         try {
             const {queryId, login, password} = req.body
 
+            console.log('queryId, login, password', queryId, login, password)
+            console.log('CLARIS_API_URL',CLARIS_API_URL)
+
             fetch(CLARIS_API_URL + '/Token', {
                 method: "POST",
                 body: `grant_type=password&username=${login}&password=${password}`,
                 headers: {"Content-Type": "application/x-www-form-urlencoded",},
             }).then((response) => response.json())
                 .then(async (data) => {
+
+                    console.log('data', data)
                     updateToken(data?.access_token)
 
                     // ответ на бота
