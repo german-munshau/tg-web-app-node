@@ -18,6 +18,7 @@ class DocumentController {
 
                 // повторное получение нового токена и повтор выгрузки
                 const userData = getUserData()
+                console.log('userData', userData)
 
                 fetch(CLARIS_API_URL + '/Token', {
                     method: "POST",
@@ -27,13 +28,23 @@ class DocumentController {
                     .then(async (data) => {
                         console.log('updateToken', data)
                         updateToken(data.access_token, userData.login, userData.password)
+
+
+                        let response = await fetch(url, getOptions())
+                        if (response.ok) {
+                            const data = await response.json()
+                            return res.status(200).json(data)
+                        } else {
+                            return res.status(response.status).json({})
+                        }
+
                     })
+                    .catch(e)
+                {
+                    console.log('error', e.message)
+                }
                 //
-                let response = await fetch(url, getOptions())
-                if (response.ok) {
-                    const data = await response.json()
-                    return res.status(200).json(data)
-                } else return res.status(response.status).json({})
+
             }
         } catch (e) {
             next(ApiError.badRequest(e.message))
