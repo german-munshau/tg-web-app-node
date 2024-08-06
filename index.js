@@ -3,13 +3,14 @@ const TelegramApi = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
 const router = require('./routes/index');
-let {chatId, bot} = require("./utils/global");
+//let {chatId, bot} = require("./utils/global");
 
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.BOT_TOKEN;
 const WEB_APP_URL = process.env.WEB_APP_URL
 
-bot = new TelegramApi(TOKEN, {polling: true})
+global.bot = new TelegramApi(TOKEN, {polling: true})
+global.chatId = null
 
 const app = express()
 app.use(express.json())
@@ -17,8 +18,11 @@ app.use(cors({origin: '*'}));
 
 app.use('/', router);
 
+
+
+
 bot.on('message', async msg => {
-    chatId = msg.chat.id;
+    global.chatId = msg.chat.id;
     const text = msg.text;
 
     if (text === '/start') {

@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-let {chatId} = require("../utils/global");
+// let {chatId} = require("../utils/global");
 
 const DB = process.env.DB
 

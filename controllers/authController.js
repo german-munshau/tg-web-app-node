@@ -1,6 +1,6 @@
 const ApiError = require('../error/ApiError');
 const {updateToken} = require("../utils/api");
-const {bot} = require("../utils/global");
+// const {bot} = require("../utils/global");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
 
