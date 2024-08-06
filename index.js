@@ -1,13 +1,19 @@
+require('dotenv').config()
 const TelegramApi = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
 const fs = require('fs');
 
-const token = '5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ'
-const webAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
-const clarisApiUrl = 'https://api.claris.su/main'
+// const token = '5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ'
+// const webAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
+// const clarisApiUrl = 'https://api.claris.su/main'
 
-const bot = new TelegramApi(token, {polling: true})
+const PORT = process.env.PORT || 8000;
+const TOKEN = process.env.BOT_TOKEN;
+const webAppUrl = process.env.WEB_APP_URL
+const clarisApiUrl = process.env.CLARIS_API_URL
+
+const bot = new TelegramApi(TOKEN, {polling: true})
 
 
 const app = express()
@@ -222,7 +228,6 @@ app.post('/document/:id/disagree', async (req, res) => {
     }
 
 })
-const PORT = 8000
 
 app.listen(PORT, () => {
     console.log('Server started on port ' + PORT)
