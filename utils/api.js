@@ -3,6 +3,7 @@ const DB = process.env.DB
 
 
 const getUserData = () => {
+    console.log('chatId:',chatId)
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     return data[chatId]
 }
