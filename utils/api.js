@@ -3,7 +3,7 @@ const DB = process.env.DB
 
 const getHeaders = () => {
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
-    const token = data[chatId]
+    const token = data[chatId].token
     return {
         "Content-Type": "application/json",
         "Authorization": 'Bearer ' + token,
@@ -25,10 +25,10 @@ const postOptions = (data) => {
     }
 }
 
-const updateToken = (token) => {
+const updateToken = (token, login, password) => {
     console.log('chatId', chatId)
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
-    data[chatId] = token
+    data[chatId] = {token, login, password}
     fs.writeFileSync(DB, JSON.stringify(data, null, 2), {encoding: "utf8", flag: 'w',});
 }
 

@@ -11,10 +11,10 @@ class DocumentPositionsController {
             const response = await fetch(url, getOptions())
             if (response.ok) {
                 const data = await response.json()
-                console.log('positions', data)
                 return res.status(200).json(data)
-            } else {
+            } else if (response.status === 401){
                 console.log(response.status)
+
                 return res.status(response.status).json({})
             }
         } catch (e) {

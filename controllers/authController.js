@@ -31,7 +31,7 @@ class DocumentController {
                 .then(async (data) => {
 
                     console.log('data', data)
-                    updateToken(data?.access_token)
+                    updateToken(data.access_token, login, password)
 
                     // ответ на бота
                     try {

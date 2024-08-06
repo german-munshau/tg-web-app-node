@@ -11,7 +11,6 @@ class DocumentController {
             const response = await fetch(url, getOptions())
             if (response.ok) {
                 const data = await response.json()
-                console.log('document', data)
                 return res.status(200).json(data)
             } else {
                 console.log(response.status)
