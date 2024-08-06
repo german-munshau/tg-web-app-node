@@ -4,14 +4,10 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs');
 
-// const token = '5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ'
-// const webAppUrl = 'https://incandescent-salmiakki-46088e.netlify.app'
-// const clarisApiUrl = 'https://api.claris.su/main'
-
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.BOT_TOKEN;
-const webAppUrl = process.env.WEB_APP_URL
-const clarisApiUrl = process.env.CLARIS_API_URL
+const WEB_APP_URL = process.env.WEB_APP_URL
+const CLARIS_API_URL = process.env.CLARIS_API_URL
 
 const bot = new TelegramApi(TOKEN, {polling: true})
 
@@ -44,7 +40,7 @@ bot.on('message', async msg => {
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: 'Авторизация', web_app: {url: webAppUrl + '/login'}, style: {width: 50}}]
+                    [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}}]
                 ],
                 resize_keyboard: true
             }
@@ -109,7 +105,7 @@ app.post('/auth', async (req, res) => {
     const {queryId, login, password} = req.body
 
     // получение токена
-    fetch(clarisApiUrl + '/Token', {
+    fetch(CLARIS_API_URL + '/Token', {
         method: "POST",
         body: `grant_type=password&username=${login}&password=${password}`,
         headers: {"Content-Type": "application/x-www-form-urlencoded",},
@@ -144,7 +140,7 @@ app.post('/auth', async (req, res) => {
 
 // получение документа
 app.get('/document/:id', async (req, res) => {
-    const url = clarisApiUrl + '/vNext/v1/documents/' + req.params["id"]
+    const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
     const response = await fetch(url, getOptions())
     if (response.ok) {
         const data = await response.json()
@@ -158,7 +154,7 @@ app.get('/document/:id', async (req, res) => {
 
 //получение истории согласования
 app.get('/agreementHistory/:id', async (req, res) => {
-    const url = `${clarisApiUrl}/vNext/v1/agreementHistories?orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id="${req.params["id"]}"`
+    const url = `${CLARIS_API_URL}/vNext/v1/agreementHistories?orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id="${req.params["id"]}"`
     const response = await fetch(url, getOptions())
     if (response.ok) {
         const data = await response.json()
@@ -172,7 +168,7 @@ app.get('/agreementHistory/:id', async (req, res) => {
 
 //получение позиций в документе
 app.get('/documentPositions/:id', async (req, res) => {
-    const url = `${clarisApiUrl}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
+    const url = `${CLARIS_API_URL}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
 
     const response = await fetch(url, getOptions())
     if (response.ok) {
@@ -189,7 +185,7 @@ app.get('/documentPositions/:id', async (req, res) => {
 app.post('/document/:id/agree', async (req, res) => {
 
     const {comment} = req.body
-    const url = `${clarisApiUrl}/vNext/v1/documents/${req.params["id"]}/agree`
+    const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
 
     try {
         const response = await fetch(url, postOptions({comment}))
@@ -211,7 +207,7 @@ app.post('/document/:id/agree', async (req, res) => {
 // Отклонить документ
 app.post('/document/:id/disagree', async (req, res) => {
     const {comment} = req.body
-    const url = `${clarisApiUrl}/vNext/v1/documents/${req.params["id"]}/disagree`
+    const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
 
     try {
         const response = await fetch(url, postOptions({comment}))
