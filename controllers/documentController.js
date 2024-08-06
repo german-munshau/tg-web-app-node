@@ -8,9 +8,7 @@ class DocumentController {
     async get(req, res, next) {
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
-            console.log('url', url)
             const response = await fetch(url, getOptions())
-
             if (response.ok) {
                 const data = await response.json()
                 console.log('document', data)
