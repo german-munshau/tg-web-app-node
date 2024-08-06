@@ -14,14 +14,14 @@ const getMessageText = (message) => {
     return 'Ошибка сервера'
 }
 
-class DocumentController {
+class AuthController {
 
     async auth(req, res, next) {
         try {
             const {queryId, login, password} = req.body
-
-            console.log('queryId, login, password', queryId, login, password)
-            console.log('CLARIS_API_URL',CLARIS_API_URL)
+            //
+            // console.log('queryId, login, password', queryId, login, password)
+            // console.log('CLARIS_API_URL',CLARIS_API_URL)
 
             fetch(CLARIS_API_URL + '/Token', {
                 method: "POST",
@@ -30,7 +30,7 @@ class DocumentController {
             }).then((response) => response.json())
                 .then(async (data) => {
 
-                    console.log('data', data)
+                    // console.log('data', data)
                     updateToken(data.access_token, login, password)
 
                     // ответ на бота
@@ -60,5 +60,5 @@ class DocumentController {
 
 }
 
-module.exports = new DocumentController();
+module.exports = new AuthController();
 

@@ -1,12 +1,17 @@
 const fs = require('fs')
 const DB = process.env.DB
 
-const getHeaders = () => {
+
+const getUserData = () => {
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
-    const token = data[chatId].token
+    return data[chatId]
+}
+
+const getHeaders = () => {
+    const userData = getUserData()
     return {
         "Content-Type": "application/json",
-        "Authorization": 'Bearer ' + token,
+        "Authorization": 'Bearer ' + userData.token,
     }
 }
 
@@ -32,4 +37,5 @@ const updateToken = (token, login, password) => {
     fs.writeFileSync(DB, JSON.stringify(data, null, 2), {encoding: "utf8", flag: 'w',});
 }
 
-module.exports = {getOptions, postOptions, updateToken}
+
+module.exports = {getOptions, postOptions, updateToken, getUserData}
