@@ -31,8 +31,7 @@ const postOptions = (data) => {
     }
 }
 
-const updateToken = (token, login, password) => {
-    console.log('chatId', chatId)
+const updateToken = (token, login, password, chatId) => {
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     data[chatId] = {token, login, password}
     fs.writeFileSync(DB, JSON.stringify(data, null, 2), {encoding: "utf8", flag: 'w',});

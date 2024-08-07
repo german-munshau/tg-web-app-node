@@ -36,7 +36,7 @@ class DocumentController {
 
                 console.log('updateToken', data)
 
-                updateToken(data.access_token, userData.login, userData.password)
+                updateToken(data.access_token, userData.login, userData.password, req.query.chat_id)
 
                 console.log('Повтор выгрузки')
 
