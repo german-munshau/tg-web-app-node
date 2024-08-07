@@ -6,7 +6,6 @@ const CLARIS_API_URL = process.env.CLARIS_API_URL
 class DocumentController {
 
     async get(req, res, next) {
-
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
             let response = await fetch(url, getOptions(req.query.chat_id))
@@ -17,7 +16,7 @@ class DocumentController {
 
                 console.log('повторное получение нового токена')
 
-                console.log('response.status:', response.status)
+//                console.log('response.status:', response.status)
 
 
                 // повторное получение нового токена и повтор выгрузки
