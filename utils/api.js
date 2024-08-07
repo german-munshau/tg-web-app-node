@@ -12,7 +12,7 @@ const getHeaders = (chatId) => {
     const userData = getUserData(chatId)
     return {
         "Content-Type": "application/json",
-        "Authorization": 'Bearer ' + userData.token,
+        "Authorization": 'Bearer ' + userData?.token,
     }
 }
 
