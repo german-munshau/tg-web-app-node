@@ -8,31 +8,18 @@ class DocumentController {
     async get(req, res, next) {
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
+            console.log(url)
+            console.log(getOptions(req.query.chat_id))
+
             let response = await fetch(url, getOptions(req.query.chat_id))
-            // const data = await response.json()
-            // console.log('data.status', data)
+
+            console.log('response.json:', await response.json())
             if (response.ok) {
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
-
                 await getNewToken(req.query.chat_id)
-                //
-                // console.log('401 - повторное получение нового токена')
-                // const userData = getUserData(req.query.chat_id)
-                //
-                // const newUserData = await fetch(CLARIS_API_URL + '/Token', {
-                //     method: "POST",
-                //     body: `grant_type=password&username=${userData.login}&password=${userData.password}`,
-                //     headers: {"Content-Type": "application/x-www-form-urlencoded",},
-                // })
-                //
-                // const data = await newUserData.json()
-                // updateToken(data.access_token, userData.login, userData.password, req.query.chat_id)
-
-
                 console.log('Повтор выгрузки')
-
                 let response = await fetch(url, getOptions(req.query.chat_id))
                 if (response.ok) {
                     const data = await response.json()
