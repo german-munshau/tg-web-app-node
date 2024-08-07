@@ -13,14 +13,18 @@ class DocumentController {
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
-                await getNewToken(req.query.chat_id)
-                console.log('Повтор выгрузки')
-                let response = await fetch(url, getOptions(req.query.chat_id))
-                if (response.ok) {
-                    const data = await response.json()
-                    return res.status(200).json(data)
+                const isNewToken = await getNewToken(req.query.chat_id)
+                if (isNewToken) {
+                    console.log('Повтор выгрузки')
+                    let response = await fetch(url, getOptions(req.query.chat_id))
+                    if (response.ok) {
+                        const data = await response.json()
+                        return res.status(200).json(data)
+                    } else {
+                        return res.status(response.status).json({})
+                    }
                 } else {
-                    return res.status(response.status).json({})
+                    return res.status(500).json({})
                 }
             }
 

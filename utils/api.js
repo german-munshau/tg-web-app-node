@@ -38,19 +38,21 @@ const updateToken = (token, login, password, chatId) => {
 }
 
 const getNewToken = async (chatId) => {
-
     console.log('401 - повторное получение нового токена')
     const userData = getUserData(chatId)
 
-    const newUserData = await fetch(process.env.CLARIS_API_URL + '/Token', {
-        method: "POST",
-        body: `grant_type=password&username=${userData.login}&password=${userData.password}`,
-        headers: {"Content-Type": "application/x-www-form-urlencoded",},
-    })
+    if (userData) {
+        const newUserData = await fetch(process.env.CLARIS_API_URL + '/Token', {
+            method: "POST",
+            body: `grant_type=password&username=${userData.login}&password=${userData.password}`,
+            headers: {"Content-Type": "application/x-www-form-urlencoded",},
+        })
 
-    const data = await newUserData.json()
-    updateToken(data.access_token, userData.login, userData.password, chatId)
-
+        const data = await newUserData.json()
+        updateToken(data.access_token, userData.login, userData.password, chatId)
+        return true
+    }
+    return false
 }
 
 module.exports = {getOptions, postOptions, updateToken, getUserData, getNewToken}
