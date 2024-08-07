@@ -18,11 +18,11 @@ class AuthController {
 
     async auth(req, res, next) {
         try {
-            const {queryId, login, password} = req.body
+            const {queryId, login, password, tg} = req.body
 
 
             //
-            console.log('queryId, login, password', queryId, login, password)
+            console.log('queryId, login, password', queryId, login, password,tg)
             // console.log('CLARIS_API_URL',CLARIS_API_URL)
 
             fetch(CLARIS_API_URL + '/Token', {
