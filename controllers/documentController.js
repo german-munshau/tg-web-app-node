@@ -15,8 +15,10 @@ class DocumentController {
                 return res.status(200).json(data)
             } else if (response.status === 401) {
 
-                console.log('response.status:', response.status)
                 console.log('повторное получение нового токена')
+
+                console.log('response.status:', response.status)
+
 
                 // повторное получение нового токена и повтор выгрузки
                 const userData = getUserData(req.query.chat_id)
