@@ -17,7 +17,7 @@ class DocumentController {
                 console.log(response.status)
 
                 // повторное получение нового токена и повтор выгрузки
-                const userData = getUserData()
+                const userData = getUserData(req.query.chat_id)
                 console.log('userData', userData)
 
                 fetch(CLARIS_API_URL + '/Token', {
