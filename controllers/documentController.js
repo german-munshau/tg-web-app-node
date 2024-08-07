@@ -15,7 +15,7 @@ class DocumentController {
             } else if (response.status === 401) {
                 const isNewToken = await getNewToken(req.query.chat_id)
                 if (isNewToken) {
-                    console.log('Повтор выгрузки')
+                    console.log('Повторная попытка выгрузки данных')
                     let response = await fetch(url, getOptions(req.query.chat_id))
                     if (response.ok) {
                         const data = await response.json()
@@ -24,7 +24,8 @@ class DocumentController {
                         return res.status(response.status).json({})
                     }
                 } else {
-                    return res.status(500).json({})
+                    console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
+                    return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
                 }
             }
 

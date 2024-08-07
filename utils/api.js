@@ -38,7 +38,7 @@ const updateToken = (token, login, password, chatId) => {
 }
 
 const getNewToken = async (chatId) => {
-    console.log('401 - повторное получение нового токена')
+    console.log('Ошибка авторизации  - получение нового токена по chat_id')
     const userData = getUserData(chatId)
 
     if (userData) {
