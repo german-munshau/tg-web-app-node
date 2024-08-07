@@ -7,20 +7,14 @@ class DocumentController {
 
     async get(req, res, next) {
 
-        console.log('req',req)
-
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
-
-
-
-            let response = await fetch(url, getOptions())
+            let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
                 console.log(response.status)
-
 
                 // повторное получение нового токена и повтор выгрузки
                 const userData = getUserData()
@@ -35,22 +29,18 @@ class DocumentController {
                         console.log('updateToken', data)
                         updateToken(data.access_token, userData.login, userData.password)
 
-
-                        let response = await fetch(url, getOptions())
+                        let response = await fetch(url, getOptions(req.query.chat_id))
                         if (response.ok) {
                             const data = await response.json()
                             return res.status(200).json(data)
                         } else {
                             return res.status(response.status).json({})
                         }
-
                     })
                     .catch(e)
                 {
                     console.log('error', e.message)
                 }
-                //
-
             }
         } catch (e) {
             next(ApiError.badRequest(e.message))

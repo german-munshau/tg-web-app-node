@@ -2,24 +2,24 @@ const fs = require('fs')
 const DB = process.env.DB
 
 
-const getUserData = () => {
+const getUserData = (chatId) => {
     console.log('chatId:',chatId)
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     return data[chatId]
 }
 
-const getHeaders = () => {
-    const userData = getUserData()
+const getHeaders = (chatId) => {
+    const userData = getUserData(chatId)
     return {
         "Content-Type": "application/json",
         "Authorization": 'Bearer ' + userData.token,
     }
 }
 
-const getOptions = () => {
+const getOptions = (chatId) => {
     return {
         method: 'GET',
-        headers: getHeaders()
+        headers: getHeaders(chatId)
     }
 }
 

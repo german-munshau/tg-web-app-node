@@ -9,7 +9,6 @@ const TOKEN = process.env.BOT_TOKEN;
 const WEB_APP_URL = process.env.WEB_APP_URL
 
 global.bot = new TelegramApi(TOKEN, {polling: true})
-global.chatId = null
 
 const app = express()
 app.use(express.json())
@@ -20,7 +19,7 @@ app.use('/', router);
 // chatId, 311462440
 
 bot.on('message', async msg => {
-    global.chatId = msg.chat.id;
+    const chatId = msg.chat.id;
     const text = msg.text;
 
     if (text === '/start') {
