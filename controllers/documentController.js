@@ -1,5 +1,5 @@
 const ApiError = require('../error/ApiError');
-const {postOptions, getOptions, updateToken, getUserData} = require("../utils/api");
+const {postOptions, getOptions, updateToken, getUserData, getNewToken} = require("../utils/api");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
 
@@ -14,29 +14,22 @@ class DocumentController {
                 return res.status(200).json(data)
             } else if (response.status === 401) {
 
-                console.log('повторное получение нового токена')
+                await getNewToken(req.query.chat_id)
+                //
+                // console.log('401 - повторное получение нового токена')
+                // const userData = getUserData(req.query.chat_id)
+                //
+                // const newUserData = await fetch(CLARIS_API_URL + '/Token', {
+                //     method: "POST",
+                //     body: `grant_type=password&username=${userData.login}&password=${userData.password}`,
+                //     headers: {"Content-Type": "application/x-www-form-urlencoded",},
+                // })
+                //
+                // const data = await newUserData.json()
+                // updateToken(data.access_token, userData.login, userData.password, req.query.chat_id)
 
-//                console.log('response.status:', response.status)
 
 
-                // повторное получение нового токена и повтор выгрузки
-                const userData = getUserData(req.query.chat_id)
-
-                console.log('userData', userData.login, userData.password)
-
-                console.log('Запрос нового токена')
-
-                const newUserData = await fetch(CLARIS_API_URL + '/Token', {
-                    method: "POST",
-                    body: `grant_type=password&username=${userData.login}&password=${userData.password}`,
-                    headers: {"Content-Type": "application/x-www-form-urlencoded",},
-                })
-
-                const data = await newUserData.json()
-
-                console.log('updateToken', data)
-
-                updateToken(data.access_token, userData.login, userData.password, req.query.chat_id)
 
                 console.log('Повтор выгрузки')
 

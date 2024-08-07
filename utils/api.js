@@ -3,7 +3,7 @@ const DB = process.env.DB
 
 
 const getUserData = (chatId) => {
-    console.log('chatId:',chatId)
+    // console.log('chatId:',chatId)
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     return data[chatId]
 }
@@ -37,5 +37,20 @@ const updateToken = (token, login, password, chatId) => {
     fs.writeFileSync(DB, JSON.stringify(data, null, 2), {encoding: "utf8", flag: 'w',});
 }
 
+const getNewToken = async (chatId) => {
 
-module.exports = {getOptions, postOptions, updateToken, getUserData}
+    console.log('401 - повторное получение нового токена')
+    const userData = getUserData(chatId)
+
+    const newUserData = await fetch(process.env.CLARIS_API_URL + '/Token', {
+        method: "POST",
+        body: `grant_type=password&username=${userData.login}&password=${userData.password}`,
+        headers: {"Content-Type": "application/x-www-form-urlencoded",},
+    })
+
+    const data = await newUserData.json()
+    updateToken(data.access_token, userData.login, userData.password, chatId)
+
+}
+
+module.exports = {getOptions, postOptions, updateToken, getUserData, getNewToken}
