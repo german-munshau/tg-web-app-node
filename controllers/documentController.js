@@ -26,7 +26,7 @@ class DocumentController {
                 } else {
                     console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
                     //return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
-                    // return res.status(500).json({})
+                    return res.status(500).json({})
                 }
             }
 
