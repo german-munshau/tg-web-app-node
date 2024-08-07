@@ -9,12 +9,12 @@ class DocumentController {
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
             let response = await fetch(url, getOptions(req.query.chat_id))
-            console.log(response.status)
+            const data = await response.json()
+            console.log('data.status', data.status)
             if (response.ok) {
                 const data = await response.json()
                 return res.status(200).json(data)
-            }
-            else if (response.status === 401) {
+            } else if (response.status === 401) {
 
                 await getNewToken(req.query.chat_id)
                 //
@@ -29,8 +29,6 @@ class DocumentController {
                 //
                 // const data = await newUserData.json()
                 // updateToken(data.access_token, userData.login, userData.password, req.query.chat_id)
-
-
 
 
                 console.log('Повтор выгрузки')
