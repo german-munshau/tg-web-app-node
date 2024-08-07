@@ -6,8 +6,14 @@ const CLARIS_API_URL = process.env.CLARIS_API_URL
 class DocumentController {
 
     async get(req, res, next) {
+
+        console.log('req',req)
+
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
+
+
+
             let response = await fetch(url, getOptions())
             if (response.ok) {
                 const data = await response.json()
