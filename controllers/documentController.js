@@ -14,32 +14,37 @@ class DocumentController {
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
-                console.log(response.status)
+
+                console.log('response.status:', response.status)
+                console.log('повторное получение нового токена')
 
                 // повторное получение нового токена и повтор выгрузки
                 const userData = getUserData(req.query.chat_id)
-                console.log('userData', userData)
 
-                fetch(CLARIS_API_URL + '/Token', {
+                console.log('userData', userData.login, userData.password)
+
+                console.log('Запрос нового токена')
+
+                const newUserData = await fetch(CLARIS_API_URL + '/Token', {
                     method: "POST",
                     body: `grant_type=password&username=${userData.login}&password=${userData.password}`,
                     headers: {"Content-Type": "application/x-www-form-urlencoded",},
-                }).then((response) => response.json())
-                    .then(async (data) => {
-                        console.log('updateToken', data)
-                        updateToken(data.access_token, userData.login, userData.password)
+                })
 
-                        let response = await fetch(url, getOptions(req.query.chat_id))
-                        if (response.ok) {
-                            const data = await response.json()
-                            return res.status(200).json(data)
-                        } else {
-                            return res.status(response.status).json({})
-                        }
-                    })
-                    .catch(e)
-                {
-                    console.log('error', e.message)
+                const data = await newUserData.json()
+
+                console.log('updateToken', data)
+
+                updateToken(data.access_token, userData.login, userData.password)
+
+                console.log('Повтор выгрузки')
+
+                let response = await fetch(url, getOptions(req.query.chat_id))
+                if (response.ok) {
+                    const data = await response.json()
+                    return res.status(200).json(data)
+                } else {
+                    return res.status(response.status).json({})
                 }
             }
         } catch (e) {
