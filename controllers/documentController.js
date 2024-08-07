@@ -10,7 +10,7 @@ class DocumentController {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
             let response = await fetch(url, getOptions(req.query.chat_id))
             const data = await response.json()
-            console.log('data.status', data.status)
+            console.log('data.status', data)
             if (response.ok) {
                 const data = await response.json()
                 return res.status(200).json(data)
