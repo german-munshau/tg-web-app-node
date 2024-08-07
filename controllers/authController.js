@@ -1,9 +1,7 @@
 const ApiError = require('../error/ApiError');
 const {updateToken} = require("../utils/api");
-// const {bot} = require("../utils/global");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
-
 
 const getMessageText = (message) => {
     if (message?.error === 'invalid_grant') {
@@ -15,27 +13,16 @@ const getMessageText = (message) => {
 }
 
 class AuthController {
-
     async auth(req, res, next) {
         try {
             const {queryId, login, password, chatId} = req.body
-
-
-            //
-            // console.log('queryId, login, password', queryId, login, password,tg)
-            // console.log('CLARIS_API_URL',CLARIS_API_URL)
-
             fetch(CLARIS_API_URL + '/Token', {
                 method: "POST",
                 body: `grant_type=password&username=${login}&password=${password}`,
                 headers: {"Content-Type": "application/x-www-form-urlencoded",},
             }).then((response) => response.json())
                 .then(async (data) => {
-
-                    // console.log('data', data)
-                    updateToken(data.access_token, login, password,chatId)
-
-                    // ответ на бота
+                    updateToken(data.access_token, login, password, chatId)
                     try {
                         await bot.answerWebAppQuery(queryId, {
                             type: 'article',
@@ -53,7 +40,6 @@ class AuthController {
                 .catch(async (e) => {
                     next(ApiError.badRequest(e.message))
                 });
-
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
