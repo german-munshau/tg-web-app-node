@@ -22,6 +22,8 @@ class AuthController {
                 headers: {"Content-Type": "application/x-www-form-urlencoded",},
             }).then((response) => response.json())
                 .then(async (data) => {
+
+                    console.log(data.access_token)
                     updateToken(data.access_token, login, password, chatId)
                     try {
                         await bot.answerWebAppQuery(queryId, {
