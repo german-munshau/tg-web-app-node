@@ -39,6 +39,16 @@ bot.on('message', async msg => {
                 resize_keyboard: true
             }
         })
+
+            await bot.sendMessage(chatId, '', {
+                reply_markup: {
+                    keyboard: [
+                        [{text: 'Поиск документа', web_app: {url: WEB_APP_URL + '/search'}}]
+                    ],
+                    resize_keyboard: true
+                }
+            })
+
     }
 
     // if (text === '/search') {
