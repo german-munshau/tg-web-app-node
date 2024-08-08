@@ -10,7 +10,7 @@ class DocumentController {
 
             console.log('req.query', req.query)
 
-            const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autoNumber}`
+            const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autonumber}`
 
             console.log(url)
 
