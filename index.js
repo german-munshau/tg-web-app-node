@@ -41,7 +41,7 @@ bot.on('message', async msg => {
             }
         })
 
-            await bot.sendMessage(chatId, ' ', {
+            await bot.sendMessage(chatId, 'Для поиска документа воспользуйтесть кнопкой ниже', {
                 reply_markup: {
                     keyboard: [
                         [{text: 'Поиск документа', web_app: {url: WEB_APP_URL + '/search'}}]
