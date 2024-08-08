@@ -18,6 +18,12 @@ app.use('/', router);
 
 // chatId, 311462440
 
+
+bot.setMyCommands([
+    {command: '/start', description: 'Старт бота'},
+    {command: '/search', description: 'Поиск документа'}
+])
+
 bot.on('message', async msg => {
     const chatId = msg.chat.id;
     const text = msg.text;
@@ -33,6 +39,16 @@ bot.on('message', async msg => {
         })
     }
 
+    if (text === '/search') {
+        await bot.sendMessage(chatId, `Введите номер документа`, {
+            reply_markup: {
+                inline_keyboard: [
+                    [{text: 'Введите номер документа', web_app: {url: WEB_APP_URL + '/search'}}]
+                ],
+                resize_keyboard: true
+            }
+        })
+    }
 })
 
 const start = async () => {
