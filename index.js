@@ -32,23 +32,25 @@ bot.on('message', async msg => {
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}}]
+                    [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}},
+                        {text: 'Введите номер документа', web_app: {url: WEB_APP_URL + '/search'}}
+                    ]
                 ],
                 resize_keyboard: true
             }
         })
     }
 
-    if (text === '/search') {
-        await bot.sendMessage(chatId, 'Введите номер документа', {
-            reply_markup: {
-                inline_keyboard: [
-                    [{text: 'Введите номер документа', web_app: {url: WEB_APP_URL + '/search'}}]
-                ],
-                resize_keyboard: true
-            }
-        })
-    }
+    // if (text === '/search') {
+    //     await bot.sendMessage(chatId, 'Введите номер документа', {
+    //         reply_markup: {
+    //             inline_keyboard: [
+    //                 [{text: 'Введите номер документа', web_app: {url: WEB_APP_URL + '/search'}}]
+    //             ],
+    //             resize_keyboard: true
+    //         }
+    //     })
+    // }
 })
 
 const start = async () => {
