@@ -41,20 +41,21 @@ bot.on('message', async msg => {
             }
         })
 
-        await bot.sendMessage(chatId, 'Для поиска документа воспользуйтесть кнопкой ниже', {
-            reply_markup: {
-                keyboard: [
-                    [{text: 'Поиск документа', web_app: {url: WEB_APP_URL + '/search'}}]
-                ],
-                resize_keyboard: true
-            }
-        })
+        // await bot.sendMessage(chatId, 'Для поиска документа воспользуйтесть кнопкой ниже', {
+        //     reply_markup: {
+        //         keyboard: [
+        //             [{text: 'Поиск документа', web_app: {url: WEB_APP_URL + '/search'}}]
+        //         ],
+        //         resize_keyboard: true
+        //     }
+        // })
+
 
         if (msg?.web_app_data?.data) {
             try {
                 const data = JSON.parse(msg?.web_app_data?.data)
-                console.log(data)
-                await bot.sendMessage(chatId, 'Спасибо за обратную связь!')
+                console.log('web_app_data: ' + data)
+                await bot.sendMessage(chatId, 'Спасибо за обратную связь!' + data?.number)
                 // await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country);
                 // await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street);
 
