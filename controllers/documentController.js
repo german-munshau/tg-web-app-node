@@ -23,9 +23,9 @@ class DocumentController {
                 console.log('data',data)
                 console.log('data.length',data.length)
 
-                if (data.length > 0) {
-                    return res.status(200).json(data[0])
-                }
+
+                    return res.status(200).json(data)
+
             } else if (response.status === 401) {
                 const isNewToken = await getNewToken(req.query.chat_id)
                 if (isNewToken) {
