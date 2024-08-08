@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 })
 
 router.use('/auth',authRouter);
-router.use('/document', documentRouter);
+router.use('/documents', documentRouter);
 router.use('/documentPositions', documentPositionRouter);
 router.use('agreementHistory', agreementHistoryRouter);
 
