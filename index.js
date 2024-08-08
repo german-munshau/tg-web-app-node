@@ -40,7 +40,7 @@ bot.on('message', async msg => {
     }
 
     if (text === '/search') {
-        await bot.sendMessage(chatId, '', {
+        await bot.sendMessage(chatId, 'Введите номер документа', {
             reply_markup: {
                 inline_keyboard: [
                     [{text: 'Введите номер документа', web_app: {url: WEB_APP_URL + '/search'}}]
