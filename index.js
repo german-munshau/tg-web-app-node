@@ -55,7 +55,7 @@ bot.on('message', async msg => {
             try {
                 const data = JSON.parse(msg?.web_app_data?.data)
                 console.log('web_app_data: ' + data)
-                await bot.sendMessage(chatId, 'Спасибо за обратную связь!' + data?.number)
+                return bot.sendMessage(chatId, 'Спасибо за обратную связь!' + data?.autonumber)
                 // await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country);
                 // await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street);
 
