@@ -15,8 +15,14 @@ class DocumentController {
             // console.log(url)
 
             let response = await fetch(url, getOptions(req.query.chat_id))
+
+
             if (response.ok) {
                 const data = await response.json()
+
+                console.log('data',data)
+                console.log('data.length',data.length)
+
                 if (data.length > 0) {
                     return res.status(200).json(data[0])
                 }
