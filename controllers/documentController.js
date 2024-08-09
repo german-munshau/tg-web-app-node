@@ -8,7 +8,7 @@ class DocumentController {
     async get(req, res, next) {
         try {
 
-            console.log(req.url)
+            console.log('req',req)
 
             const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autonumber}`
 
