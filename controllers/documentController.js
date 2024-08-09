@@ -38,8 +38,12 @@ class DocumentController {
     async getById(req, res, next) {
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
+            console.log('document get by id', url)
+            console.log('req.query.chat_id',req.query.chat_id)
+
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
+                console.log('OK')
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
