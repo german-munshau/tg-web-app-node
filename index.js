@@ -18,12 +18,6 @@ app.use('/', router);
 
 // chatId, 311462440
 
-
-// bot.setMyCommands([
-//     {command: '/start', description: 'Старт бота'},
-//     {command: '/search', description: 'Поиск документа'}
-// ])
-
 bot.on('message', async msg => {
     const chatId = msg.chat.id;
     const text = msg.text;
@@ -32,53 +26,24 @@ bot.on('message', async msg => {
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}}
-                        //,
-                        // {text: 'Введите номер документа', web_app: {url: WEB_APP_URL + '/search'}}
-                    ]
+                    [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}}]
                 ],
                 resize_keyboard: true
             }
         })
 
-        // await bot.sendMessage(chatId, 'Для поиска документа воспользуйтесть кнопкой ниже', {
-        //     reply_markup: {
-        //         keyboard: [
-        //             [{text: 'Поиск документа', web_app: {url: WEB_APP_URL + '/search'}}]
-        //         ],
-        //         resize_keyboard: true
+        // if (msg?.web_app_data?.data) {
+        //     try {
+        //         const data = JSON.parse(msg?.web_app_data?.data)
+        //         console.log('web_app_data: ' + data)
+        //         return bot.sendMessage(chatId, 'Спасибо за обратную связь!' + data?.autonumber)
+        //     } catch (e) {
+        //         console.log(e);
         //     }
-        // })
-
-
-        if (msg?.web_app_data?.data) {
-            try {
-                const data = JSON.parse(msg?.web_app_data?.data)
-                console.log('web_app_data: ' + data)
-                return bot.sendMessage(chatId, 'Спасибо за обратную связь!' + data?.autonumber)
-                // await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country);
-                // await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street);
-
-                // setTimeout(async () => {
-                //     await bot.sendMessage(chatId, 'Всю информацию вы получите в этом чате');
-                // }, 3000)
-            } catch (e) {
-                console.log(e);
-            }
-        }
+        // }
 
     }
 
-    // if (text === '/search') {
-    //     await bot.sendMessage(chatId, 'Введите номер документа', {
-    //         reply_markup: {
-    //             inline_keyboard: [
-    //                 [{text: 'Введите номер документа', web_app: {url: WEB_APP_URL + '/search'}}]
-    //             ],
-    //             resize_keyboard: true
-    //         }
-    //     })
-    // }
 })
 
 const start = async () => {

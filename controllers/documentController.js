@@ -1,5 +1,5 @@
 const ApiError = require('../error/ApiError');
-const {postOptions, getOptions, updateToken, getUserData, getNewToken} = require("../utils/api");
+const {postOptions, getOptions, getNewToken} = require("../utils/api");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
 
@@ -8,9 +8,6 @@ class DocumentController {
     async get(req, res, next) {
         try {
             const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autonumber}`
-
-            console.log('DocumentController:', url, req.query.chat_id )
-
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 const data = await response.json()
@@ -69,14 +66,11 @@ class DocumentController {
     }
 
     async agree(req, res, next) {
-
         try {
             const {comment} = req.body
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
-
             await fetch(url, postOptions({comment}))
             return res.status(200).json({})
-
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -86,10 +80,8 @@ class DocumentController {
         try {
             const {comment} = req.body
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
-
             await fetch(url, postOptions({comment}))
             return res.status(200).json({})
-
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }

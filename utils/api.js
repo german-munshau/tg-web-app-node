@@ -3,7 +3,6 @@ const DB = process.env.DB
 
 
 const getUserData = (chatId) => {
-    // console.log('chatId:',chatId)
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     return data[chatId]
 }
@@ -55,4 +54,4 @@ const getNewToken = async (chatId) => {
     return false
 }
 
-module.exports = {getOptions, postOptions, updateToken, getUserData, getNewToken}
+module.exports = {getOptions, postOptions, updateToken, getNewToken}
