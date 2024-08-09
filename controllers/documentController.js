@@ -8,6 +8,11 @@ class DocumentController {
     async get(req, res, next) {
         try {
             const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autonumber}`
+
+            console.log('document get by autonumber', url)
+            console.log('req.query',req.query)
+            console.log('req.params',req.params)
+
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 const data = await response.json()
@@ -39,7 +44,8 @@ class DocumentController {
         try {
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
             console.log('document get by id', url)
-            console.log('req.query.chat_id',req.query.chat_id)
+            console.log('req.query',req.query)
+            console.log('req.params',req.params)
 
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {

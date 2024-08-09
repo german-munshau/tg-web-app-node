@@ -10,7 +10,8 @@ class DocumentPositionsController {
             const url = `${CLARIS_API_URL}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
 
             console.log('documentPositions get by id', url)
-            console.log('req.query.chat_id',req.query.chat_id)
+            console.log('req.query',req.query)
+            console.log('req.params',req.params)
 
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
