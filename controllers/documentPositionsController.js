@@ -7,18 +7,15 @@ class DocumentPositionsController {
 
     async get(req, res, next) {
         try {
+            console.log('URL: ', req.originalUrl)
             const url = `${CLARIS_API_URL}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
-
-            console.log('documentPositions get by id', url)
-            console.log('req.query',req.query)
-            console.log('req.params',req.params)
-
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
-                console.log('OK')
+                console.log('status: OK')
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
+                console.log('status: 401')
                 const isNewToken = await getNewToken(req.query.chat_id)
                 if (isNewToken) {
                     console.log('Повторная попытка выгрузки позиций документа')

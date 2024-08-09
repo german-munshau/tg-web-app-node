@@ -7,15 +7,8 @@ class DocumentController {
 
     async get(req, res, next) {
         try {
-
-            console.log('URL: ',req.originalUrl)
-
+            console.log('URL: ', req.originalUrl)
             const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autonumber}`
-
-            // console.log('document get by autonumber', url)
-            // console.log('req.query',req.query)
-            // console.log('req.params',req.params)
-
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 console.log('status: OK')
@@ -47,17 +40,15 @@ class DocumentController {
 
     async getById(req, res, next) {
         try {
+            console.log('URL: ', req.originalUrl)
             const url = CLARIS_API_URL + '/vNext/v1/documents/' + req.params["id"]
-            console.log('document get by id', url)
-            console.log('req.query',req.query)
-            console.log('req.params',req.params)
-
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
-                console.log('OK')
+                console.log('status: OK')
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
+                console.log('status: 401')
                 const isNewToken = await getNewToken(req.query.chat_id)
                 if (isNewToken) {
                     console.log('Повторная попытка выгрузки документа')
@@ -82,9 +73,12 @@ class DocumentController {
 
     async agree(req, res, next) {
         try {
+            console.log('URL: ', req.originalUrl)
+            console.log('body: ', req.body)
             const {comment} = req.body
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
             await fetch(url, postOptions({comment}))
+            console.log('status: OK')
             return res.status(200).json({})
         } catch (e) {
             next(ApiError.badRequest(e.message))
@@ -93,9 +87,12 @@ class DocumentController {
 
     async disagree(req, res, next) {
         try {
+            console.log('URL: ', req.originalUrl)
+            console.log('body: ', req.body)
             const {comment} = req.body
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
             await fetch(url, postOptions({comment}))
+            console.log('status: OK')
             return res.status(200).json({})
         } catch (e) {
             next(ApiError.badRequest(e.message))
