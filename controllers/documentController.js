@@ -7,25 +7,14 @@ class DocumentController {
 
     async get(req, res, next) {
         try {
-
-            // console.log('req.query', req.query)
-
             const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autonumber}`
 
-            // console.log(url)
+            console.log('DocumentController:', url, req.query.chat_id )
 
             let response = await fetch(url, getOptions(req.query.chat_id))
-
-
             if (response.ok) {
                 const data = await response.json()
-
-                console.log('data',data)
-                console.log('data.length',data.length)
-
-
-                    return res.status(200).json(data)
-
+                return res.status(200).json(data)
             } else if (response.status === 401) {
                 const isNewToken = await getNewToken(req.query.chat_id)
                 if (isNewToken) {

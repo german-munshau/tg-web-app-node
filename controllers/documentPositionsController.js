@@ -23,6 +23,9 @@ class DocumentPositionsController {
 
         try {
             const url = `${CLARIS_API_URL}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
+
+            console.log('DocumentPositionsController:', url, req.query.chat_id )
+
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 const data = await response.json()
