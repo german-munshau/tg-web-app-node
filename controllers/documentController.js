@@ -15,6 +15,7 @@ class DocumentController {
 
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
+                console.log('OK')
                 const data = await response.json()
                 return res.status(200).json(data)
             } else if (response.status === 401) {
