@@ -8,7 +8,7 @@ class DocumentController {
     async get(req, res, next) {
         try {
             console.log('URL: ', req.originalUrl)
-            const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=autonumber=${req.query.autonumber}`
+            const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=serialNumber=${req.query.serialNumber}`
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 console.log('status: OK')
