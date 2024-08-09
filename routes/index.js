@@ -12,6 +12,6 @@ router.get('/', async (req, res) => {
 router.use('/auth',authRouter);
 router.use('/documents', documentRouter);
 router.use('/documentPositions', documentPositionRouter);
-router.use('agreementHistory', agreementHistoryRouter);
+router.use('/agreementHistory', agreementHistoryRouter);
 
 module.exports = router;
