@@ -65,6 +65,9 @@ class DocumentController {
                     // return res.status(500).json({})
                 }
             }
+            else {
+                return res.status(response.status).json()
+            }
 
         } catch (e) {
             next(ApiError.badRequest(e.message))
