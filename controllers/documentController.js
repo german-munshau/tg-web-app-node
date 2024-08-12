@@ -65,7 +65,7 @@ class DocumentController {
                     // return res.status(500).json({})
                 }
             } else {
-                console.log('Response:', response.status, response.statusText)
+                console.log('status:', response.status, response.statusText)
                 return res.status(response.status).json({})
             }
 
