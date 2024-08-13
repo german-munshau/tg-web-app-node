@@ -26,7 +26,7 @@ const getOptions = (chatId) => {
 const postOptions = (data) => {
     return {
         method: 'POST',
-        headers: getHeaders(data.chat_id),
+        headers: getHeaders(data.chatId),
         body: JSON.stringify({comment: data.comment})
     }
 }
