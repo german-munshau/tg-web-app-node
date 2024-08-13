@@ -95,7 +95,9 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
-            return res.status(response.status)
+            console.log(response)
+            // return res.status(response.status)
+            return res.status('OK')
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
