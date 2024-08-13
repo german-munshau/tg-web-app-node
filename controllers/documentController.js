@@ -89,6 +89,7 @@ class DocumentController {
             //     console.log(response.status, response.statusText)
             //     return res.status(500).json({})
             // }
+            return res.status(response.status).json({message: response.statusText})
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
