@@ -29,7 +29,6 @@ class DocumentController {
                 } else {
                     console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
                     return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
-                    // return res.status(500).json({})
                 }
             }
 
@@ -62,7 +61,6 @@ class DocumentController {
                 } else {
                     console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
                     return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
-                    // return res.status(500).json({})
                 }
             } else {
                 console.log('status:', response.status, response.statusText)
@@ -96,7 +94,6 @@ class DocumentController {
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
             return res.status(response.status).json({})
-            //return await res.status('OK')
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
