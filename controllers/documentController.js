@@ -81,15 +81,7 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
-
-            // if (response.ok) {
-            //     console.log('status: OK')
-            //     return res.status(200).json({})
-            // } else {
-            //     console.log(response.status, response.statusText)
-            //     return res.status(500).json({})
-            // }
-            return res.status(response.status).json({message: response.statusText})
+            return res.status(response.status)
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -103,14 +95,7 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
-
-            // if (response.ok) {
-            //     console.log('status: OK')
-            //     return res.status(200).json({})
-            // } else {
-            //     console.log(response.status, response.statusText)
-            //     return res.status(500).json({})
-            // }
+            return res.status(response.status)
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
