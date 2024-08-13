@@ -81,7 +81,7 @@ class DocumentController {
             console.log('body: ', req.body)
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
-            return await res.status(response.status)
+            return await res.status(response.status).json({})
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -95,9 +95,8 @@ class DocumentController {
             console.log('body: ', req.body)
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
-            console.log(response)
-            // return res.status(response.status)
-            return await res.status('OK')
+            return res.status(response.status).json({})
+            //return await res.status('OK')
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
