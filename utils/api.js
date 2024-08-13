@@ -8,7 +8,6 @@ const getUserData = (chatId) => {
 }
 
 const getHeaders = (chatId) => {
-    console.log('chatId:', chatId)
     const userData = getUserData(chatId)
     return {
         "Content-Type": "application/json",
