@@ -82,6 +82,7 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
             console.log('URL:',url)
             const options = postOptions({comment})
+            console.log('options:',options)
             const response = await fetch(url, options)
             // const response = await fetch(url, postOptions({comment}))
             console.log('status: OK', response)
