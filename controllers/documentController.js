@@ -78,29 +78,38 @@ class DocumentController {
         try {
             console.log('URL: ', req.originalUrl)
             console.log('body: ', req.body)
-            const {comment,chat_id} = req.body
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
-            console.log('URL:',url)
-            const options = postOptions(req.body)
-            console.log('options:',options)
-            const response = await fetch(url, options)
-            // const response = await fetch(url, postOptions({comment}))
-            console.log('status: OK', response)
-            return res.status(200).json({})
+            const response = await fetch(url, postOptions(req.body))
+            console.log('Status:', response.status, response.statusText)
+
+            // if (response.ok) {
+            //     console.log('status: OK')
+            //     return res.status(200).json({})
+            // } else {
+            //     console.log(response.status, response.statusText)
+            //     return res.status(500).json({})
+            // }
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
     }
 
+
     async disagree(req, res, next) {
         try {
             console.log('URL: ', req.originalUrl)
             console.log('body: ', req.body)
-            // const {comment,chat_id} = req.body
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
-            await fetch(url, postOptions(req.body))
-            console.log('status: OK')
-            return res.status(200).json({})
+            const response = await fetch(url, postOptions(req.body))
+            console.log('Status:', response.status, response.statusText)
+
+            // if (response.ok) {
+            //     console.log('status: OK')
+            //     return res.status(200).json({})
+            // } else {
+            //     console.log(response.status, response.statusText)
+            //     return res.status(500).json({})
+            // }
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
