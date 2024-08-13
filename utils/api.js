@@ -8,6 +8,7 @@ const getUserData = (chatId) => {
 }
 
 const getHeaders = (chatId) => {
+    console.log('chatId:', chatId)
     const userData = getUserData(chatId)
     return {
         "Content-Type": "application/json",
@@ -25,8 +26,8 @@ const getOptions = (chatId) => {
 const postOptions = (data) => {
     return {
         method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(data)
+        headers: getHeaders(data.chat_id),
+        body: JSON.stringify({comment: data.comment})
     }
 }
 
