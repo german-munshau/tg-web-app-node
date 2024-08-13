@@ -76,12 +76,12 @@ class DocumentController {
 
     async agree(req, res, next) {
         try {
-            console.log('URL: ', req.originalUrl)
-            console.log('body: ', req.body)
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
+            console.log('URL:', url)
+            console.log('body: ', req.body)
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
-            return res.status(response.status)
+            return await res.status(response.status)
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -90,14 +90,14 @@ class DocumentController {
 
     async disagree(req, res, next) {
         try {
-            console.log('URL: ', req.originalUrl)
-            console.log('body: ', req.body)
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
+            console.log('URL:', url)
+            console.log('body: ', req.body)
             const response = await fetch(url, postOptions(req.body))
             console.log('Status:', response.status, response.statusText)
             console.log(response)
             // return res.status(response.status)
-            return res.status('OK')
+            return await res.status('OK')
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
