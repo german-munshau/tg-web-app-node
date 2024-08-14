@@ -4,6 +4,7 @@ const {postOptions, getOptions, getNewToken} = require("../utils/api");
 const CLARIS_API_URL = process.env.CLARIS_API_URL
 const TELEGRAM_URL = process.env.TELEGRAM_URL
 const BOT_TOKEN = process.env.BOT_TOKEN
+const WEB_APP_URL = process.env.WEB_APP_URL
 
 class MessageController {
 
@@ -23,7 +24,18 @@ class MessageController {
 
             const response = await bot.sendMessage(req.query.chat_id, req.query.text)
 
-            console.log('response', response)
+            console.log('response.message_id', response.message_id)
+
+
+            await bot.editMessageReplyMarkup({
+                inline_keyboard: [
+                    [{
+                        text: 'Открыть',
+                        web_app: {url: WEB_APP_URL + `/show/${req.params['id']}?chat_id=${req.query.chat_id}&message_id=${response.messageId}`},
+                    }]
+                ]
+            })
+
             // await bot.sendMessage(req.query.chat_id, req.query.text, {
             //     reply_markup: {
             //         inline_keyboard: [
