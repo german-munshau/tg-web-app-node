@@ -35,6 +35,11 @@ class AuthController {
                             }
                         })
                         console.log('status: OK')
+
+
+                        // await bot.editMessageReplyMarkup({})
+
+
                         return res.status(200).json({})
                     } catch (e) {
                         return res.status(500).json({})
