@@ -29,6 +29,7 @@ bot.on('message', async msg => {
                     [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}}]
                 ],
                 resize_keyboard: true,
+                remove_keyboard: true,
                 one_time_keyboard: true
             },
 
