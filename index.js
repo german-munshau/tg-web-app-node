@@ -25,10 +25,17 @@ bot.on('message', async msg => {
     if (text === '/start') {
 
         console.log('msg.message_id', msg.message_id)
+
+        const messageId = msg.message_id
+
         await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}}]
+                    [{
+                        text: 'Авторизация',
+                        web_app: {url: WEB_APP_URL + '/login?message_id=' + messageId},
+                        style: {width: 50}
+                    }]
                 ],
                 resize_keyboard: true,
                 // remove_keyboard: true,
