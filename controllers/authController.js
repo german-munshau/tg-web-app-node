@@ -17,7 +17,7 @@ class AuthController {
         try {
             console.log('URL: ', req.originalUrl)
             console.log('body: ', req.body)
-            const {queryId, login, password, chatId} = req.body
+            const {queryId, login, password, chatId, messageId} = req.body
             fetch(CLARIS_API_URL + '/Token', {
                 method: "POST",
                 body: `grant_type=password&username=${login}&password=${password}`,
@@ -34,6 +34,10 @@ class AuthController {
                                 message_text: getMessageText(data),
                             }
                         })
+
+                        await bot.deleteMessage(chatId, messageId)
+
+
                         console.log('status: OK')
                         return res.status(200).json({})
                     } catch (e) {
