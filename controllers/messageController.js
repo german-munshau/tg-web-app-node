@@ -34,6 +34,9 @@ class MessageController {
                         web_app: {url: WEB_APP_URL + `/show/${req.params['id']}?chat_id=${req.query.chat_id}&message_id=${response.messageId}`},
                     }]
                 ]
+            }, {
+                chat_id: req.query.chat_id,
+                message_id: response.message_id
             })
 
             // await bot.sendMessage(req.query.chat_id, req.query.text, {
