@@ -28,8 +28,10 @@ bot.on('message', async msg => {
                 inline_keyboard: [
                     [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login'}, style: {width: 50}}]
                 ],
-                resize_keyboard: true
-            }
+                resize_keyboard: true,
+                one_time_keyboard: true
+            },
+
         })
 
         // if (msg?.web_app_data?.data) {
