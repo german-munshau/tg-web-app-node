@@ -7,8 +7,8 @@ class MessageController {
 
     async get(req, res, next) {
 
-
-        console.log('req', req)
+        console.log('req.params', req.params)
+        console.log('req.query', req.query)
         return res.status(200).json({message: 'тест'})
 
 
