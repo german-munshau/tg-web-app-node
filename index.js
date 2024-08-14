@@ -33,7 +33,7 @@ bot.on('message', async msg => {
                 inline_keyboard: [
                     [{
                         text: 'Авторизация',
-                        web_app: {url: WEB_APP_URL + '/login?message_id=' + messageId},
+                        web_app: {url: WEB_APP_URL + '/login?messageId=' + messageId},
                         style: {width: 50}
                     }]
                 ],
