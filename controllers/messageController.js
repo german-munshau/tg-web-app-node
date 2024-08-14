@@ -10,28 +10,18 @@ class MessageController {
 
     async get(req, res, next) {
 
-        console.log('req.params', req.params)
-        console.log('req.query', req.query)
-
-
-        //https://api.telegram.org/bot5416293431:AAETAbHErxrPHS0kx_aACws_zJS9QqbKnpQ/sendMessage?chat_id=311462440&text=Документ № 919 ждёт Вашей визы&reply_markup={"inline_keyboard":[[{"text":"Открыть","web_app":{"url":"https://incandescent-salmiakki-46088e.netlify.app/show/5059814032000?chat_id=311462440"}}]],"resize_keyboard":true}
-
-
         try {
-            // const telegramURL = `${TELEGRAM_URL}/bot${BOT_TOKEN}/sendMessage?chat_id=${req.query.chat_id}&text=${req.query.text}&reply_markup={"inline_keyboard":[[{"text":"Открыть","web_app":{"url":"https://incandescent-salmiakki-46088e.netlify.app/show/${req.params["id"]}?chat_id=${req.query.chat_id}"}}]],"resize_keyboard":true}`
-            // telegramURL = `${TELEGRAM_URL}/bot${BOT_TOKEN}/sendMessage?chat_id=${req.query.chat_id}&text=${req.query.text}&reply_markup={"inline_keyboard":[[{"text":"Открыть","web_app":{"url":"https://incandescent-salmiakki-46088e.netlify.app/show/${req.params["id"]}?chat_id=${req.query.chat_id}"}}]],"resize_keyboard":true}`
-
-
             const response = await bot.sendMessage(req.query.chat_id, req.query.text)
 
-            console.log('response.message_id', response.message_id)
+            const webAppUrl = WEB_APP_URL + `/show/${req.params['id']}?chat_id=${req.query.chat_id}&message_id=${response.messageId}`
 
+            console.log('webAppUrl', webAppUrl)
 
             await bot.editMessageReplyMarkup({
                 inline_keyboard: [
                     [{
                         text: 'Открыть',
-                        web_app: {url: WEB_APP_URL + `/show/${req.params['id']}?chat_id=${req.query.chat_id}&message_id=${response.messageId}`},
+                        web_app: {url: webAppUrl},
                     }]
                 ]
             }, {
@@ -39,10 +29,8 @@ class MessageController {
                 message_id: response.message_id
             })
 
-
-            const data = await response.data
-            console.log(data)
-            return res.status(200).json(data)
+            console.log(response)
+            return res.status(200).json(response)
 
         } catch (e) {
             console.log(e)
