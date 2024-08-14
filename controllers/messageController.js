@@ -39,23 +39,8 @@ class MessageController {
                 message_id: response.message_id
             })
 
-            // await bot.sendMessage(req.query.chat_id, req.query.text, {
-            //     reply_markup: {
-            //         inline_keyboard: [
-            //             [{
-            //                 text: 'Авторизация',
-            //                 web_app: {url: WEB_APP_URL + '/login?messageId=' + messageId},
-            //                 style: {width: 50}
-            //             }]
-            //         ],
-            //         resize_keyboard: true,
-            //     },
-            //
-            // })
 
-            // console.log(telegramURL)
-            // let response = await fetch(telegramURL)
-            const data = await response.json()
+            const data = await response.data
             console.log(data)
             return res.status(200).json(data)
 
