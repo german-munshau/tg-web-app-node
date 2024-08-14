@@ -36,7 +36,9 @@ class AuthController {
                         })
                         console.log('status: OK')
 
-
+                        await bot.deleteMessage(chatId, 1185)
+                        await bot.deleteMessage(chatId, 1187)
+                        await bot.deleteMessage(chatId, 1189)
                         // await bot.editMessageReplyMarkup({})
 
 
