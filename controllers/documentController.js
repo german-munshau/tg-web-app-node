@@ -79,8 +79,10 @@ class DocumentController {
             console.log('body: ', req.body)
             const {chatId, messageId, number, comment} = req.body
             const response = await fetch(url, postOptions(chatId, comment))
-            await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
-            console.log('Status:', response.status, response.statusText)
+            if (response.ok) {
+                await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
+                console.log('Status:', response.status, response.statusText)
+            }
             return await res.status(response.status).json({})
         } catch (e) {
             console.log(e)
@@ -96,8 +98,10 @@ class DocumentController {
             console.log('body: ', req.body)
             const {chatId, messageId, number, comment} = req.body
             const response = await fetch(url, postOptions(chatId, comment))
-            await bot.editMessageText(`Документ № ${number} отклонен`, {chat_id: chatId, message_id: messageId})
-            console.log('Status:', response.status, response.statusText)
+            if (response.ok) {
+                await bot.editMessageText(`Документ № ${number} отклонен`, {chat_id: chatId, message_id: messageId})
+                console.log('Status:', response.status, response.statusText)
+            }
             return res.status(response.status).json({})
         } catch (e) {
             console.log(e)
