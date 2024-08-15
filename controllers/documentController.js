@@ -79,9 +79,6 @@ class DocumentController {
             console.log('body: ', req.body)
             const {chatId, messageId, number, comment} = req.body
             const response = await fetch(url, postOptions(chatId, comment))
-
-            console.log('response',response)
-
             await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
             console.log('Status:', response.status, response.statusText)
             return await res.status(response.status).json({})
