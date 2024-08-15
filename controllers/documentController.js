@@ -83,10 +83,11 @@ class DocumentController {
 
             await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
 
-            return await res.status(200)
+            return await res.status(200).json({})
 
             // return await res.status(response.status).json({})
         } catch (e) {
+            console.log(e)
             next(ApiError.badRequest(e.message))
         }
     }
@@ -105,10 +106,11 @@ class DocumentController {
 
             await bot.editMessageText(`Документ № ${number} отклонен`, {chat_id: chatId, message_id: messageId})
 
-            return await res.status(200)
+            return await res.status(200).json({})
 
             // return res.status(response.status).json({})
         } catch (e) {
+            console.log(e)
             next(ApiError.badRequest(e.message))
         }
     }
