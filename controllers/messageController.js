@@ -9,8 +9,8 @@ class MessageController {
             const {chat_id, text} = req.query
             const id = req.params['id']
 
-            const response = await bot.sendMessage(chat_id, text)
-            const message_id = response.message_id
+            const data = await bot.sendMessage(chat_id, text)
+            const message_id = data.message_id
 
             const webAppUrl = WEB_APP_URL + `/show/${id}?chat_id=${chat_id}&message_id=${message_id}`
             await bot.editMessageReplyMarkup({
@@ -18,8 +18,8 @@ class MessageController {
                     [{text: 'Открыть', web_app: {url: webAppUrl}}]
                 ]
             }, {chat_id, message_id})
-            console.log('status:', response.status)
-            return res.status(200).json(response)
+            console.log('status:', res.status)
+            return res.status(200).json(data)
 
         } catch (e) {
             console.log(e)
