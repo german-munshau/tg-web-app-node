@@ -16,8 +16,6 @@ app.use(cors({origin: '*'}));
 
 app.use('/', router);
 
-app.use('/test', (req,res) => res.send('Test Page'));
-
 bot.on('message', async msg => {
     const chatId = msg.chat.id;
     const text = msg.text;
