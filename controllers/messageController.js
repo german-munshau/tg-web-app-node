@@ -3,7 +3,6 @@ const WEB_APP_URL = process.env.WEB_APP_URL
 class MessageController {
 
     async get(req, res, next) {
-
         try {
             console.log('URL: ', req.originalUrl)
             const {chat_id, text} = req.query
@@ -18,9 +17,8 @@ class MessageController {
                     [{text: 'Открыть', web_app: {url: webAppUrl}}]
                 ]
             }, {chat_id, message_id})
-            console.log('status:', res.status)
+            console.log('status: OK')
             return res.status(200).json(data)
-
         } catch (e) {
             console.log(e)
             return res.status(500).json({message: 'Error'})

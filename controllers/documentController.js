@@ -77,9 +77,15 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
             console.log('URL:', url)
             console.log('body: ', req.body)
-            const response = await fetch(url, postOptions(req.body))
-            console.log('Status:', response.status, response.statusText)
-            return await res.status(response.status).json({})
+            const {chatId, messageId, comment} = req.body
+       //     const response = await fetch(url, postOptions(chatId, comment))
+        //    console.log('Status:', response.status, response.statusText)
+
+            await bot.editMessageReplyMarkup({}, {chat_id: chatId, message_id: messageId})
+
+            return await res.status(200)
+
+            // return await res.status(response.status).json({})
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -91,9 +97,17 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
             console.log('URL:', url)
             console.log('body: ', req.body)
-            const response = await fetch(url, postOptions(req.body))
-            console.log('Status:', response.status, response.statusText)
-            return res.status(response.status).json({})
+
+            const {chatId, messageId, comment} = req.body
+
+            // const response = await fetch(url, postOptions(chatId, comment))
+            // console.log('Status:', response.status, response.statusText)
+
+            await bot.editMessageText('Отклонено', {chat_id: chatId, message_id: messageId})
+
+            return await res.status(200)
+
+            // return res.status(response.status).json({})
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
