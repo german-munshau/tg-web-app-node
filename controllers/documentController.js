@@ -77,11 +77,11 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
             console.log('URL:', url)
             console.log('body: ', req.body)
-            const {chatId, messageId, comment} = req.body
+            const {chatId, messageId, number, comment} = req.body
        //     const response = await fetch(url, postOptions(chatId, comment))
         //    console.log('Status:', response.status, response.statusText)
 
-            await bot.editMessageReplyMarkup({}, {chat_id: chatId, message_id: messageId})
+            await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
 
             return await res.status(200)
 
@@ -98,12 +98,12 @@ class DocumentController {
             console.log('URL:', url)
             console.log('body: ', req.body)
 
-            const {chatId, messageId, comment} = req.body
+            const {chatId, messageId, number, comment} = req.body
 
             // const response = await fetch(url, postOptions(chatId, comment))
             // console.log('Status:', response.status, response.statusText)
 
-            await bot.editMessageText('Отклонено', {chat_id: chatId, message_id: messageId})
+            await bot.editMessageText(`Документ № ${number} отклонен`, {chat_id: chatId, message_id: messageId})
 
             return await res.status(200)
 
