@@ -5,6 +5,7 @@ class MessageController {
     async get(req, res, next) {
 
         try {
+            console.log('URL: ', req.originalUrl)
             const {chat_id, text} = req.query
             const id = req.params['id']
 
@@ -17,7 +18,7 @@ class MessageController {
                     [{text: 'Открыть', web_app: {url: webAppUrl}}]
                 ]
             }, {chat_id, message_id})
-
+            console.log('status:', response.status)
             return res.status(200).json(response)
 
         } catch (e) {
