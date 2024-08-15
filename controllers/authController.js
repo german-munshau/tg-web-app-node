@@ -34,10 +34,7 @@ class AuthController {
                                 message_text: getMessageText(data),
                             }
                         })
-
                         await bot.deleteMessage(chatId, messageId)
-
-
                         console.log('status: OK')
                         return res.status(200).json({})
                     } catch (e) {

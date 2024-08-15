@@ -16,13 +16,11 @@ app.use(cors({origin: '*'}));
 
 app.use('/', router);
 
-// chatId, 311462440
+app.use('/test', (req,res) => res.send('Test Page'));
 
 bot.on('message', async msg => {
     const chatId = msg.chat.id;
     const text = msg.text;
-
-    console.log('MESSAGE:',msg)
 
     if (text === '/start') {
         const messageId = msg.message_id
@@ -37,19 +35,7 @@ bot.on('message', async msg => {
                 ],
                 resize_keyboard: true,
             },
-
         })
-
-        // if (msg?.web_app_data?.data) {
-        //     try {
-        //         const data = JSON.parse(msg?.web_app_data?.data)
-        //         console.log('web_app_data: ' + data)
-        //         return bot.sendMessage(chatId, 'Спасибо за обратную связь!' + data?.autonumber)
-        //     } catch (e) {
-        //         console.log(e);
-        //     }
-        // }
-
     }
 
 })
