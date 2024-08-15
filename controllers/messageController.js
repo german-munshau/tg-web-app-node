@@ -12,16 +12,12 @@ class MessageController {
             const message_id = response.message_id
 
             const webAppUrl = WEB_APP_URL + `/show/${id}?chat_id=${chat_id}&message_id=${message_id}`
-
-            console.log('webAppUrl', webAppUrl)
-
             await bot.editMessageReplyMarkup({
                 inline_keyboard: [
                     [{text: 'Открыть', web_app: {url: webAppUrl}}]
                 ]
             }, {chat_id, message_id})
 
-            console.log(response) // ответ от телеграмма
             return res.status(200).json(response)
 
         } catch (e) {

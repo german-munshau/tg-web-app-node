@@ -3,6 +3,6 @@ const router = new Router();
 const messageController = require('../controllers/messageController')
 
 
-router.get('/send/:id', messageController.get);
+router.get('/document/:id', messageController.get);
 
 module.exports = router;

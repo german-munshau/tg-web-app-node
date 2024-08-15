@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 })
 
 router.use('/auth', authRouter);
-router.use('/message', messageRouter);
+router.use('/send', messageRouter);
 router.use('/documents', documentRouter);
 router.use('/documentPositions', documentPositionRouter);
 router.use('/agreementHistory', agreementHistoryRouter);
