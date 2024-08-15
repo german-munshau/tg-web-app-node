@@ -2,3 +2,4 @@
 .idea
 .env
 db.json
+web.config
