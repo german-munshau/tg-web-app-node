@@ -3,6 +3,7 @@ const TelegramApi = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
 const router = require('./routes/index');
+const {postOptions} = require("./utils/api");
 
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.BOT_TOKEN;
@@ -17,25 +18,35 @@ app.use(cors({origin: '*'}));
 app.use('/', router);
 
 bot.on('message', async msg => {
-    const chatId = msg.chat.id;
+    const chat_id = msg.chat.id;
     const text = msg.text;
 
     if (text === '/start') {
-        const messageId = msg.message_id
-        await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
-            reply_markup: {
-                inline_keyboard: [
-                    [{
-                        text: 'Авторизация',
-                        web_app: {url: WEB_APP_URL + '/login?messageId=' + messageId},
-                        style: {width: 50}
-                    }]
-                ],
-                resize_keyboard: true,
-            },
-        })
-    }
+        // const messageId = msg.message_id
 
+        // await bot.sendMessage(chatId, `Необходима авторизация, введите логин, пароль от системы Кларис`, {
+        //     reply_markup: {
+        //         inline_keyboard: [
+        //             [{
+        //                 text: 'Авторизация',
+        //                 web_app: {url: WEB_APP_URL + '/login?messageId=' + messageId},
+        //                 style: {width: 50}
+        //             }]
+        //         ],
+        //         resize_keyboard: true,
+        //     },
+        // })
+
+        const data = await bot.sendMessage(chat_id, `Необходима авторизация, введите логин, пароль от системы Кларис`)
+        const message_id = data.message_id
+
+        await bot.editMessageReplyMarkup({
+            inline_keyboard: [
+                [{text: 'Авторизация', web_app: {url: WEB_APP_URL + '/login?messageId=' + message_id}}]
+            ]
+        }, {chat_id, message_id})
+
+    }
 })
 
 const start = async () => {
