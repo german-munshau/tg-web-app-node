@@ -21,7 +21,6 @@ class DocumentController {
             }
         } else if (response.status === 401) {
             console.log('status: 401 - Получение токена')
-
             const isNewToken = await getNewToken(req.query.chat_id)
             if (isNewToken) {
                 console.log('Повторная попытка выгрузки документа')
@@ -37,12 +36,11 @@ class DocumentController {
                         return res.status(200).json(data[0])
                     }
                 } else {
-                    // return res.status(response.status).json({})
                     return next(ApiError.forbidden('Ошибка выгрузки документа'))
                 }
             } else {
                 console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
-                return next(ApiError.forbidden('Не найдено инфо о пользователе в базе бота, необходима авторизация'))
+                return next(ApiError.forbidden('Необходима авторизация /start'))
             }
         }
         console.log('status: 404 Документ не найден')
