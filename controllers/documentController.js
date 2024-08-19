@@ -13,7 +13,7 @@ class DocumentController {
             if (response.ok) {
                 const data = await response.json()
                 if (data.length === 0) {
-                    console.log('status: 404 Not Found')
+                    console.log('status: 404 Not Found', data)
                     return res.status(404).json(data)
                 } else {
                     console.log('status: OK')
