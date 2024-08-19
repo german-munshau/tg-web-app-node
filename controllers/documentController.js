@@ -6,45 +6,48 @@ const CLARIS_API_URL = process.env.CLARIS_API_URL
 class DocumentController {
 
     async get(req, res, next) {
-        try {
-            console.log('URL: ', req.originalUrl)
-            const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=serialNumber=${req.query.serialNumber}`
-            let response = await fetch(url, getOptions(req.query.chat_id))
-            if (response.ok) {
-                const data = await response.json()
-                if (data.length === 0) {
-                    console.log('status: 404 Not Found', data)
-                    return res.status(404).json(data)
-                } else {
-                    console.log('status: OK')
-                    return res.status(200).json(data)
-                }
-            } else if (response.status === 401) {
-                console.log('status: 401')
-                const isNewToken = await getNewToken(req.query.chat_id)
-                if (isNewToken) {
-                    console.log('Повторная попытка выгрузки документа')
-                    let response = await fetch(url, getOptions(req.query.chat_id))
-                    if (response.ok) {
-                        const data = await response.json()
-                        return res.status(200).json(data)
-                    } else {
-                        return res.status(response.status).json({})
-                    }
-                } else {
-                    console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
-                    return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
-                }
+        // try {
+        console.log('URL: ', req.originalUrl)
+        const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=serialNumber=${req.query.serialNumber}`
+        let response = await fetch(url, getOptions(req.query.chat_id))
+        if (response.ok) {
+            const data = await response.json()
+            if (data.length === 0) {
+                console.log('status: 404 Not Found', data)
+                return res.status(404).json(data)
+            } else {
+                console.log('status: OK')
+                return res.status(200).json(data)
             }
-            console.log('вывод статуса', response.status, response.statusText, response.statusMessage)
-            return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
-
-        } catch (e) {
-            console.log('error', e)
-            console.log('error.message', e.message)
-            return res.status(500).json({message: 'Ошибка сервера'})
-            // next(ApiError.badRequest(e.message))
+        } else if (response.status === 401) {
+            console.log('status: 401')
+            const isNewToken = await getNewToken(req.query.chat_id)
+            if (isNewToken) {
+                console.log('Повторная попытка выгрузки документа')
+                let response = await fetch(url, getOptions(req.query.chat_id))
+                if (response.ok) {
+                    const data = await response.json()
+                    return res.status(200).json(data)
+                } else {
+                    return res.status(response.status).json({})
+                }
+            } else {
+                console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
+                return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
+            }
         }
+        console.log('status: 404 Not Found')
+        return res.status(404).json([])
+
+        // console.log('вывод статуса', response.status, response.statusText, response.statusMessage)
+        // return res.status(500).json({message: 'Не найдено инфо о пользователе в базе бота, необходима авторизация'})
+
+        // } catch (e) {
+        //     console.log('error', e)
+        //     console.log('error.message', e.message)
+        //     return res.status(500).json({message: 'Ошибка сервера'})
+        //     // next(ApiError.badRequest(e.message))
+        // }
     }
 
     async getById(req, res, next) {
