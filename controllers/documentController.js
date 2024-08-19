@@ -11,10 +11,14 @@ class DocumentController {
             const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=serialNumber=${req.query.serialNumber}`
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
-                console.log('status: OK')
+
                 const data = await response.json()
+                console.log('data',data)
+                console.log('status: OK')
+
                 return res.status(200).json(data)
-            } else if (response.status === 401) {
+            } else
+                if (response.status === 401) {
                 console.log('status: 401')
                 const isNewToken = await getNewToken(req.query.chat_id)
                 if (isNewToken) {
