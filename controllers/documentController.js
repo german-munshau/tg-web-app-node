@@ -38,7 +38,8 @@ class DocumentController {
             }
 
         } catch (e) {
-            next(ApiError.badRequest(e.message))
+            return res.status(500).json({message: 'Ошибка сервера'})
+            // next(ApiError.badRequest(e.message))
         }
     }
 
