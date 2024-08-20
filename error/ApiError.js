@@ -15,8 +15,12 @@ class ApiError extends Error {
     }
 
 
-    static forbidden(message){
+    static forbidden(message) {
         return new ApiError(403, message)
+    }
+
+    static common(errorCode, message) {
+        return new ApiError(errorCode, message)
     }
 }
 
