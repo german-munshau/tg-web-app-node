@@ -40,7 +40,7 @@ class DocumentController {
                 }
             } else {
                 console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
-                return next(ApiError.forbidden('Необходима авторизация'))
+                return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
             }
         }
         console.log('status: 404 Документ не найден')
@@ -70,7 +70,7 @@ class DocumentController {
                     }
                 } else {
                     console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
-                    return res.status(500).json({message: 'Необходима авторизация'})
+                    return res.status(500).json({message: 'Необходима авторизация в системе Кларис'})
                 }
             } else {
                 console.log('status:', response.status, response.statusText)
