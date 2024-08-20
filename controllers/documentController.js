@@ -88,7 +88,7 @@ class DocumentController {
                 return await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
             } else {
                 console.log('before return')
-                next(ApiError.badRequest('Ошибка при согласовании'))
+               return next(ApiError.badRequest('Ошибка при согласовании'))
             }
             // return await res.status(response.status).json({})
         } catch (e) {
