@@ -83,8 +83,8 @@ class DocumentController {
             console.log('body: ', req.body)
             const {chatId, messageId, number, comment} = req.body
             const response = await fetch(url, postOptions(chatId, comment))
+            console.log('Status:', response.status, response.statusText)
             if (response.status === 200) {
-                console.log('Status:', response.status, response.statusText)
                 return await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
             }
             return next(ApiError.badRequest('Ошибка при согласовании'))
