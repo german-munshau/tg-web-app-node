@@ -91,6 +91,7 @@ class DocumentController {
                 })
             } else {
                 // return next(ApiError.badRequest('Ошибка при согласовании'))
+                await bot.sendMessage(chatId, `Ошибка при согласовании документа № ${number}`)
                 return next(ApiError.common(response.status, 'Ошибка при согласовании'))
             }
             // return await res.status(response.status).json({})
