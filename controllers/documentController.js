@@ -86,9 +86,10 @@ class DocumentController {
             console.log('Status:', response.status, response.statusText)
             if (response.status === 200) {
                 return await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
+            } else {
+                console.log('before return')
+                next(ApiError.badRequest('Ошибка при согласовании'))
             }
-            console.log('before return')
-            return next(ApiError.badRequest('Ошибка при согласовании'))
             // return await res.status(response.status).json({})
         } catch (e) {
             console.log('catch ---')
