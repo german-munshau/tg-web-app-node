@@ -35,7 +35,7 @@ class DocumentController {
                         return res.status(200).json(data[0])
                     }
                 } else {
-                    return next(ApiError.forbidden('Ошибка выгрузки документа'))
+                    return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
                 }
             } else {
                 console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
@@ -65,7 +65,7 @@ class DocumentController {
                     const data = await response.json()
                     return res.status(200).json(data)
                 } else {
-                    return next(ApiError.forbidden('Ошибка выгрузки документа'))
+                    return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
                 }
             } else {
                 console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
