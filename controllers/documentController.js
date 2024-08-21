@@ -109,10 +109,11 @@ class DocumentController {
             const response = await fetch(url, postOptions(chatId, comment))
             console.log('Status:', response.status, response.statusText)
             if (response.status === 200) {
-                return await bot.editMessageText(`Документ № ${number} отклонен`, {
+                await bot.editMessageText(`Документ № ${number} отклонен`, {
                     chat_id: chatId,
                     message_id: messageId
                 })
+                return res.status(response.status).json({})
             } else {
                 const errorMessage = `Ошибка при отклонении документа № ${number}`
                 await bot.sendMessage(chatId, errorMessage)
@@ -122,43 +123,6 @@ class DocumentController {
             return next(ApiError.common(e.errorCode.message))
         }
     }
-
-    // async agree(req, res, next) {
-    //     try {
-    //         const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
-    //         console.log('URL:', url)
-    //         console.log('body: ', req.body)
-    //         const {chatId, messageId, number, comment} = req.body
-    //         const response = await fetch(url, postOptions(chatId, comment))
-    //         if (response.ok) {
-    //             await bot.editMessageText(`Документ № ${number} согласован`, {chat_id: chatId, message_id: messageId})
-    //             console.log('Status:', response.status, response.statusText)
-    //         }
-    //         return res.status(response.status).json({})
-    //     } catch (e) {
-    //         console.log(e)
-    //         next(ApiError.badRequest(e.message))
-    //     }
-    // }
-
-
-    // async disagree(req, res, next) {
-    //     try {
-    //         const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
-    //         console.log('URL:', url)
-    //         console.log('body: ', req.body)
-    //         const {chatId, messageId, number, comment} = req.body
-    //         const response = await fetch(url, postOptions(chatId, comment))
-    //         if (response.ok) {
-    //             await bot.editMessageText(`Документ № ${number} отклонен`, {chat_id: chatId, message_id: messageId})
-    //             console.log('Status:', response.status, response.statusText)
-    //         }
-    //         return res.status(response.status).json({})
-    //     } catch (e) {
-    //         console.log(e)
-    //         next(ApiError.badRequest(e.message))
-    //     }
-    // }
 
 }
 
