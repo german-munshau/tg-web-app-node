@@ -85,10 +85,11 @@ class DocumentController {
             const response = await fetch(url, postOptions(chatId, comment))
             console.log('Status:', response.status, response.statusText)
             if (response.status === 200) {
-                return await bot.editMessageText(`Документ № ${number} согласован`, {
+                await bot.editMessageText(`Документ № ${number} согласован`, {
                     chat_id: chatId,
                     message_id: messageId
                 })
+                return res.status(response.status).json({})
             } else {
                 const errorMessage = `Ошибка при согласовании документа № ${number}`
                 await bot.sendMessage(chatId, errorMessage)
