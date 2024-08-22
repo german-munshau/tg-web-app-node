@@ -62,9 +62,11 @@ class DocumentController {
                 console.log('Повторная попытка выгрузки документа')
                 let response = await fetch(url, getOptions(req.query.chat_id))
                 if (response.status === 200) {
+                    console.log('status: OK')
                     const data = await response.json()
                     return res.status(200).json(data)
                 } else {
+                    console.log('status: Необходима авторизация в системе Кларис')
                     return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
                 }
             } else {
