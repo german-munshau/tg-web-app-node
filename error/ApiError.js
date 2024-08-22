@@ -20,6 +20,9 @@ class ApiError extends Error {
     }
 
     static common(errorCode, message) {
+        if (errorCode === 401) {
+            return new ApiError(errorCode, `${message}\n${errorCode} : Ошибка авторизации`)
+        }
         if (errorCode === 403) {
             return new ApiError(errorCode, `${message}\n${errorCode} : Доступ запрещен`)
         }

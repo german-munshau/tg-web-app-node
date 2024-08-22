@@ -24,8 +24,6 @@ class DocumentController {
             if (isNewToken) {
                 console.log('Повторная попытка выгрузки документа')
                 let response = await fetch(url, getOptions(req.query.chat_id))
-                console.log('response',response.status)
-
                 if (response.status === 200) {
                     console.log('status: OK')
                     const data = await response.json()
@@ -38,11 +36,13 @@ class DocumentController {
                         return res.status(200).json(data[0])
                     }
                 } else {
-                    return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
+                    return next(ApiError.common(response.status, 'Необходима авторизация в системе Кларис'))
+                    // return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
                 }
             } else {
                 console.log('Не найдено инфо о пользователе в базе бота, необходима авторизация')
-                return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
+                // return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
+                return next(ApiError.common(response.status, 'Необходима авторизация в системе Кларис'))
             }
         }
         console.log('status: 404 Документ не найден')
