@@ -14,6 +14,8 @@ const getMessageText = (message) => {
 
 class AuthController {
     async auth(req, res, next) {
+
+        console.log('req',req)
         try {
             console.log('URL: ', req.originalUrl)
             console.log('body: ', req.body)
