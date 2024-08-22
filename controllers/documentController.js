@@ -24,7 +24,10 @@ class DocumentController {
             if (isNewToken) {
                 console.log('Повторная попытка выгрузки документа')
                 let response = await fetch(url, getOptions(req.query.chat_id))
+                console.log('response',response.status)
+
                 if (response.status === 200) {
+                    console.log('status: OK')
                     const data = await response.json()
 
                     if (data.length === 0) {
