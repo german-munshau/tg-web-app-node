@@ -35,11 +35,13 @@ class AuthController {
                                 message_text: getMessageText(data),
                             }
                         })
-
-                        console.log('data',data)
-
-                        await bot.deleteMessage(chatId, messageId)
-                        console.log('status: OK')
+                        console.log('response',response)
+                        if (data?.access_token) {
+                            await bot.deleteMessage(chatId, messageId)
+                            console.log('status: Access granted')
+                        } else {
+                            console.log(`status: ${data?.error}, ${data?.error_description}`)
+                        }
                         return res.status(200).json({})
                     } catch (e) {
                         return res.status(500).json({})
