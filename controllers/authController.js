@@ -22,7 +22,8 @@ class AuthController {
                 method: "POST",
                 body: `grant_type=password&username=${login}&password=${password}`,
                 headers: {"Content-Type": "application/x-www-form-urlencoded",},
-            }).then((response) => response.json())
+            })
+                .then((response) => response.json())
                 .then(async (data) => {
                     updateToken(data.access_token, login, password, chatId)
                     try {
@@ -34,6 +35,9 @@ class AuthController {
                                 message_text: getMessageText(data),
                             }
                         })
+
+                        console.log('data',data)
+
                         await bot.deleteMessage(chatId, messageId)
                         console.log('status: OK')
                         return res.status(200).json({})
