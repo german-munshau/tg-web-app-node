@@ -35,7 +35,6 @@ class AuthController {
                                 message_text: getMessageText(data),
                             }
                         })
-                        console.log('response',response)
                         if (data?.access_token) {
                             await bot.deleteMessage(chatId, messageId)
                             console.log('status: Access granted')
