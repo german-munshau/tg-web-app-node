@@ -48,8 +48,11 @@ const getNewToken = async (chatId) => {
         })
 
         const data = await newUserData.json()
-        updateToken(data.access_token, userData.login, userData.password, chatId)
-        return true
+        if (data?.access_token) {
+            updateToken(data.access_token, userData.login, userData.password, chatId)
+            return true
+        } else return false
+
     }
     return false
 }
