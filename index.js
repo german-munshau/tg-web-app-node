@@ -2,6 +2,7 @@ require('dotenv').config()
 const TelegramApi = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
+const pino = require('pino-http')()
 const router = require('./routes/index');
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 
@@ -14,7 +15,7 @@ global.bot = new TelegramApi(TOKEN, {polling: true})
 const app = express()
 app.use(express.json())
 app.use(cors({origin: '*'}));
-
+app.use(pino)
 app.use('/', router);
 // обработка ошибок
 app.use(errorHandler);

@@ -16,6 +16,7 @@ class AuthController {
     async auth(req, res, next) {
 
         console.log('req',req)
+        req.log.info('Авторизация пользователя')
         try {
             console.log('URL: ', req.originalUrl)
             console.log('body: ', req.body)

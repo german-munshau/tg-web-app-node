@@ -21,7 +21,6 @@ class DocumentController {
         } else if (response.status === 401) {
             console.log('status: 401 - Получение токена')
             const isNewToken = await getNewToken(req.query.chat_id)
-            console.log('isNewToken',isNewToken)
             if (isNewToken) {
                 console.log('Повторная попытка выгрузки документа')
                 let response = await fetch(url, getOptions(req.query.chat_id))
