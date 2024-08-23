@@ -1,10 +1,11 @@
+const logger = require("../logger");
 const WEB_APP_URL = process.env.WEB_APP_URL
 
 class MessageController {
 
     async get(req, res, next) {
         try {
-            console.log('URL: ', req.originalUrl)
+            logger.info(`MessageController get: ${req.originalUrl}`)
             const {chat_id, text} = req.query
             const id = req.params['id']
 
@@ -17,10 +18,11 @@ class MessageController {
                     [{text: 'Открыть', web_app: {url: webAppUrl}}]
                 ]
             }, {chat_id, message_id})
-            console.log('status: OK')
+            logger.info('OK')
             return res.status(200).json(data)
         } catch (e) {
             console.log(e)
+            // logger.error(e.errorMessage)
             return res.status(500).json({message: 'Error'})
         }
     }

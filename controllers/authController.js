@@ -1,5 +1,6 @@
 const ApiError = require('../error/ApiError');
 const {updateToken} = require("../utils/api");
+const logger = require("../logger");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
 
@@ -14,12 +15,8 @@ const getMessageText = (message) => {
 
 class AuthController {
     async auth(req, res, next) {
-
-        console.log('req',req)
-        req.log.info('Авторизация пользователя')
         try {
-            console.log('URL: ', req.originalUrl)
-            console.log('body: ', req.body)
+            logger.info(`AuthController auth: ${req.originalUrl} \nbody: ${req.body}`)
             const {queryId, login, password, chatId, messageId} = req.body
             fetch(CLARIS_API_URL + '/Token', {
                 method: "POST",
@@ -39,10 +36,10 @@ class AuthController {
                             }
                         })
                         if (data?.access_token) {
+                            logger.info('Access granted')
                             await bot.deleteMessage(chatId, messageId)
-                            console.log('status: Access granted')
                         } else {
-                            console.log(`status: ${data?.error}, ${data?.error_description}`)
+                            logger.error(`status: ${data?.error}, ${data?.error_description}`)
                         }
                         return res.status(200).json({})
                     } catch (e) {
