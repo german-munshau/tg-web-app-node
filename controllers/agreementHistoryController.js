@@ -10,6 +10,7 @@ class AgreementHistoryController {
         try {
             logger.info(`AgreementHistoryController get: ${req.originalUrl}`)
             const url = `${CLARIS_API_URL}/vNext/v1/agreementHistories?orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id="${req.params["id"]}"`
+            logger.info(`API GET: ${url}`)
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 logger.info('OK')

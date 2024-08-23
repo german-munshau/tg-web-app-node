@@ -10,6 +10,7 @@ class DocumentPositionsController {
         try {
             logger.info(`DocumentPositionsController get: ${req.originalUrl}`)
             const url = `${CLARIS_API_URL}/vNext/v1/documentPositions?filterBy=document.id="${req.params["id"]}"`
+            logger.info(`API GET: ${url}`)
             let response = await fetch(url, getOptions(req.query.chat_id))
             if (response.ok) {
                 logger.info('OK')
