@@ -37,10 +37,11 @@ class DocumentController {
                         return res.status(200).json(data[0])
                     }
                 } else {
+                    logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
                     return next(ApiError.common(response.status, 'Необходима авторизация в системе Кларис'))
                 }
             } else {
-                logger.error('Не найдено инфо о пользователе в базе бота, необходима авторизация')
+                logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
                 return next(ApiError.common(response.status, 'Необходима авторизация в системе Кларис'))
             }
         }
@@ -69,12 +70,12 @@ class DocumentController {
                     const data = await response.json()
                     return res.status(200).json(data)
                 } else {
-                    logger.error('Необходима авторизация в системе Кларис')
-                    return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
+                    logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
+                    return next(ApiError.common(response.status, 'Необходима авторизация в системе Кларис'))
                 }
             } else {
-                logger.error('Необходима авторизация в системе Кларис')
-                return next(ApiError.forbidden('Необходима авторизация в системе Кларис'))
+                logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
+                return next(ApiError.common(response.status, 'Необходима авторизация в системе Кларис'))
             }
         }
         logger.error('Документ не найден')

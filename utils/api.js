@@ -1,4 +1,5 @@
 const fs = require('fs')
+const logger = require("../logger");
 const DB = process.env.DB
 
 
@@ -37,9 +38,8 @@ const updateToken = (token, login, password, chatId) => {
 }
 
 const getNewToken = async (chatId) => {
-    console.log('Ошибка авторизации  - получение нового токена по chat_id:', chatId)
+    logger.error(`Ошибка авторизации  - получение нового токена по chat_id: ${chatId}` )
     const userData = getUserData(chatId)
-
     if (userData) {
         const newUserData = await fetch(process.env.CLARIS_API_URL + '/Token', {
             method: "POST",
