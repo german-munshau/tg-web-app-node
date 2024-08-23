@@ -85,8 +85,7 @@ class DocumentController {
         logger.info(`DocumentController agree: ${req.originalUrl}`)
         try {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/agree`
-            logger.info(`URL: ${url}`)
-            logger.info(`body: ${req.body}`)
+            logger.info(`URL: ${url} body: ${JSON.stringify(req.body)}`)
             const {chatId, messageId, number, comment} = req.body
             const response = await fetch(url, postOptions(chatId, comment))
             logger.info(`${response.status} ${response.statusText}`)
@@ -113,8 +112,7 @@ class DocumentController {
         logger.info(`DocumentController disagree: ${req.originalUrl}`)
         try {
             const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/disagree`
-            logger.info(`URL: ${url}`)
-            logger.info(`body: ${req.body}`)
+            logger.info(`URL: ${url} body: ${JSON.stringify(req.body)}`)
             const {chatId, messageId, number, comment} = req.body
             const response = await fetch(url, postOptions(chatId, comment))
             logger.info(`${response.status} ${response.statusText}`)
