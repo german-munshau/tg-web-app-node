@@ -5,8 +5,10 @@ const documentPositionRouter = require('./documentPositionRouter')
 const agreementHistoryRouter = require('./agreementHistoryRouter')
 const messageRouter = require('./messageRouter')
 const authRouter = require('./authRouter')
+const logger = require('../logger')
 
 router.get('/', async (req, res) => {
+    logger.info('Server is working...')
     return res.send('Server is working...')
 })
 
