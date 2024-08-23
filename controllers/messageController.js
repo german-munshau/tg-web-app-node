@@ -21,7 +21,7 @@ class MessageController {
             logger.info('OK')
             return res.status(200).json(data)
         } catch (e) {
-            console.log(e)
+            console.log(e.body)
             // logger.error(e.errorMessage)
             return res.status(500).json({message: 'Error'})
         }
