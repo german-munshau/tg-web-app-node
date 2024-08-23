@@ -16,7 +16,7 @@ const getMessageText = (message) => {
 class AuthController {
     async auth(req, res, next) {
         try {
-            logger.info(`AuthController auth: ${req.originalUrl} \nbody: ${req.body}`)
+            logger.info(`AuthController auth: ${req.originalUrl} \nbody: ${JSON.stringify(req.body)}`)
             const {queryId, login, password, chatId, messageId} = req.body
             fetch(CLARIS_API_URL + '/Token', {
                 method: "POST",
