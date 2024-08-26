@@ -29,6 +29,7 @@ class DocumentController {
                 if (response.status === 200) {
                     logger.info('OK')
                     const data = await response.json()
+                    logger.info('typeof data',typeof data)
                     if (data.length === 0) {
                         logger.error(`Документ № ${req.query.serialNumber} не найден`)
                         return next(ApiError.badRequest('Документ не найден'))

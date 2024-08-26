@@ -72,6 +72,7 @@ const getResponse = async (url, chatId) => {
             if (response.status === 200) {
                 logger.info('OK')
                 const data = await response.json()
+                logger.info('typeof data',typeof data)
                 return {status: 200, data}
             } else {
                 logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
