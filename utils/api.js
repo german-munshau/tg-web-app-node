@@ -69,7 +69,7 @@ const getResponse = async (url, chatId) => {
                 return {status: 404, message: 'Документ не найден'}
             } else {
                 logger.info('OK')
-                return {status: 404, data: data[0]}
+                return {status: 200, data: data[0]}
             }
         } else {
             logger.info('OK')
