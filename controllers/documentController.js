@@ -11,7 +11,6 @@ class DocumentController {
         const url = `${CLARIS_API_URL}/vNext/v1/documents?filterBy=serialNumber=${req.query.serialNumber}`
         logger.info(`API GET: ${url}`)
         const response = await getResponse(url, req.query.chat_id)
-        // console.log('response get',response)
         if (response.status === 200) {
             return res.status(200).json(response.data)
         } else {
@@ -25,7 +24,6 @@ class DocumentController {
         const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
         logger.info(`API GET: ${url}`)
         const response = await getResponse(url, req.query.chat_id)
-        // console.log('response getById',response)
         if (response.status === 200) {
             return res.status(200).json(response.data)
         } else {

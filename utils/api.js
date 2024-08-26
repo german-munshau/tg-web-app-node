@@ -58,12 +58,11 @@ const getNewToken = async (chatId) => {
     return false
 }
 
-const getResponse = async (url, chatId) => {
+const getResponse = async (url, chatId, multiple = false) => {
     const response = await fetch(url, getOptions(chatId))
     if (response.status === 200) {
         const data = await response.json()
-        console.log('data',data)
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && !multiple) {
             if (data.length === 0) {
                 logger.error(`Документ не найден`)
                 return {status: 404, message: 'Документ не найден'}
