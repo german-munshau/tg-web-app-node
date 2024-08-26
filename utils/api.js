@@ -61,7 +61,7 @@ const getResponse = async (url, chatId) => {
     const response = await fetch(url, getOptions(chatId))
     if (response.status === 200) {
         const data = await response.json()
-        logger.info('typeof data',typeof data)
+        console.log('typeof data',typeof data)
         logger.info('OK')
         return {status: 200, data}
     } else if (response.status === 401) {

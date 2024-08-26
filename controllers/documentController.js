@@ -13,7 +13,7 @@ class DocumentController {
         let response = await fetch(url, getOptions(req.query.chat_id))
         if (response.status === 200) {
             const data = await response.json()
-            logger.info('typeof data',typeof data)
+            console.log('typeof data',typeof data)
             if (data.length === 0) {
                 logger.error(`Документ № ${req.query.serialNumber} не найден`)
                 return next(ApiError.badRequest('Документ не найден'))
