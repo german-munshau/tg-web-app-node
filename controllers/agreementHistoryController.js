@@ -11,7 +11,7 @@ class AgreementHistoryController {
         logger.info(`AgreementHistoryController get: ${req.originalUrl}`)
         const url = `${CLARIS_API_URL}/vNext/v1/agreementHistories?orderBy=date+desc,&filters=NoEmptyAgreed&filterBy=document.id="${req.params["id"]}"`
         logger.info(`API GET: ${url}`)
-        const response = await getResponse(url, req.query.chat_id)
+        const response = await getResponse(url, req.query.chat_id, true)
         if (response.status === 200) {
             return res.status(200).json(response.data)
         } else {
