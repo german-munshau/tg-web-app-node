@@ -34,7 +34,7 @@ const logger = pino({
                 level: "error",
                 options: {
                     colorize: false,
-                    destination: `${__dirname}/logs/app-error}.log`,
+                    destination: `${__dirname}/logs/app-error.log`,
                     translateTime: "SYS:dd-mm-yyyy HH:MM:ss",
                     ignore: "pid,hostname",
                 }
