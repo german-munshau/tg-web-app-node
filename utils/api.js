@@ -62,6 +62,7 @@ const getResponse = async (url, chatId) => {
     const response = await fetch(url, getOptions(chatId))
     if (response.status === 200) {
         const data = await response.json()
+        console.log('data',data)
         if (Array.isArray(data)) {
             if (data.length === 0) {
                 logger.error(`Документ не найден`)
