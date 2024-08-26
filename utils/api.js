@@ -1,6 +1,6 @@
 const fs = require('fs')
 const logger = require("../logger");
-const ApiError = require("../error/ApiError");
+
 const DB = process.env.DB
 
 
@@ -59,6 +59,7 @@ const getNewToken = async (chatId) => {
 }
 
 const getResponse = async (url, chatId, multiple = false) => {
+    logger.info(`API GET: ${url}`)
     const response = await fetch(url, getOptions(chatId))
     if (response.status === 200) {
         const data = await response.json()
@@ -98,4 +99,4 @@ const getResponse = async (url, chatId, multiple = false) => {
 }
 
 
-module.exports = {getOptions, postOptions, updateToken, getNewToken, getResponse}
+module.exports = {postOptions, updateToken, getResponse}
