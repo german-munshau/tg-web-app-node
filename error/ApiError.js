@@ -19,6 +19,10 @@ class ApiError extends Error {
         return new ApiError(403, message)
     }
 
+    static unauthorized(message) {
+        return new ApiError(401, message)
+    }
+
     static common(errorCode, message) {
         if (errorCode === 401) {
             return new ApiError(errorCode, `${message}\n${errorCode} : Ошибка авторизации`)

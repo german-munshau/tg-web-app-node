@@ -5,6 +5,7 @@ const documentPositionRouter = require('./documentPositionRouter')
 const agreementHistoryRouter = require('./agreementHistoryRouter')
 const messageRouter = require('./messageRouter')
 const authRouter = require('./authRouter')
+const adminRouter = require('./adminRouter')
 const logger = require('../logger')
 
 router.get('/', async (req, res) => {
@@ -17,5 +18,6 @@ router.use('/send', messageRouter);
 router.use('/documents', documentRouter);
 router.use('/documentPositions', documentPositionRouter);
 router.use('/agreementHistory', agreementHistoryRouter);
+router.use('/admin', adminRouter);
 
 module.exports = router;
