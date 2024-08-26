@@ -12,21 +12,28 @@ const pino = require('pino')
 const getLogFileName = () => {
     const date = new Date();
     const res = date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2) + ('0' + date.getDate()).slice(-2) + date.getMinutes()
-    console.log('res',res)
+    console.log('res', res)
     return res
 }
 
 
-const logger = pino({
+const logger =  () => pino({
     level: process.env.LOG_LEVEL || 'info',
     transport: {
-        target: 'pino-pretty',
-        options: {
-            colorize: false,
-            destination: `${__dirname}/logs/app-${getLogFileName()}.log`,
-            translateTime: "SYS:dd-mm-yyyy HH:MM:ss",
-            ignore: "pid,hostname",
-        }
+        targets: [
+            {
+                target: 'pino-pretty',
+                options: {
+                    colorize: false,
+                    destination: `${__dirname}/logs/app-${getLogFileName()}.log`,
+                    translateTime: "SYS:dd-mm-yyyy HH:MM:ss",
+                    ignore: "pid,hostname",
+                }
+            },
+            {
+                target: 'pino-pretty',
+            },
+        ]
     }
 })
 
