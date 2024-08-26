@@ -11,7 +11,9 @@ const pino = require('pino')
 
 const getLogFileName = () => {
     const date = new Date();
-    return date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2) + ('0' + date.getDate()).slice(-2) + date.getMinutes()
+    const res = date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2) + ('0' + date.getDate()).slice(-2) + date.getMinutes()
+    console.log('res',res)
+    return res
 }
 
 
