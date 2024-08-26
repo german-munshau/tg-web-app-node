@@ -1,5 +1,6 @@
 const fs = require('fs')
 const logger = require("../logger");
+const ApiError = require("../error/ApiError");
 const DB = process.env.DB
 
 
@@ -38,7 +39,7 @@ const updateToken = (token, login, password, chatId) => {
 }
 
 const getNewToken = async (chatId) => {
-    logger.error(`Ошибка авторизации  - получение нового токена по chat_id: ${chatId}` )
+    logger.error(`Ошибка авторизации  - получение нового токена по chat_id: ${chatId}`)
     const userData = getUserData(chatId)
     if (userData) {
         const newUserData = await fetch(process.env.CLARIS_API_URL + '/Token', {
@@ -61,9 +62,18 @@ const getResponse = async (url, chatId) => {
     const response = await fetch(url, getOptions(chatId))
     if (response.status === 200) {
         const data = await response.json()
-        console.log('typeof data',typeof data)
-        logger.info('OK')
-        return {status: 200, data}
+        if (Array.isArray(data)) {
+            if (data.length === 0) {
+                logger.error(`Документ не найден`)
+                return {status: 404, message: 'Документ не найден'}
+            } else {
+                logger.info('OK')
+                return {status: 404, data: data[0]}
+            }
+        } else {
+            logger.info('OK')
+            return {status: 200, data}
+        }
     } else if (response.status === 401) {
         logger.info('Получение токена')
         const isNewToken = await getNewToken(chatId)
@@ -73,7 +83,7 @@ const getResponse = async (url, chatId) => {
             if (response.status === 200) {
                 logger.info('OK')
                 const data = await response.json()
-                logger.info('typeof data',typeof data)
+                logger.info('typeof data', typeof data)
                 return {status: 200, data}
             } else {
                 logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
