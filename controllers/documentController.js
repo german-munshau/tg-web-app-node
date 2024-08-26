@@ -1,6 +1,6 @@
 const ApiError = require('../error/ApiError');
 const logger = require('../logger')
-const {postOptions, getOptions, getNewToken} = require("../utils/api");
+const {postOptions, getOptions, getNewToken, getResponse} = require("../utils/api");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
 
@@ -51,6 +51,19 @@ class DocumentController {
 
 
     async getById(req, res, next) {
+        logger.info(`DocumentController getById: ${req.originalUrl}`)
+        const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
+        logger.info(`API GET: ${url}`)
+        const response = await getResponse(url, req.query.chat_id)
+        if (response.status === 200) {
+            return res.status(200).json(response.data)
+        } else {
+            logger.error(response.message)
+            return next(ApiError.common(response.status, response.message))
+        }
+    }
+
+    async getById2(req, res, next) {
         logger.info(`DocumentController getById: ${req.originalUrl}`)
         const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
         logger.info(`API GET: ${url}`)

@@ -57,4 +57,33 @@ const getNewToken = async (chatId) => {
     return false
 }
 
-module.exports = {getOptions, postOptions, updateToken, getNewToken}
+const getResponse = async (url, chatId) => {
+    const response = await fetch(url, getOptions(chatId))
+    if (response.status === 200) {
+        const data = await response.json()
+        logger.info('OK')
+        return {status: 200, data}
+    } else if (response.status === 401) {
+        logger.info('Получение токена')
+        const isNewToken = await getNewToken(chatId)
+        if (isNewToken) {
+            logger.info('Повторная попытка выгрузки данных')
+            let response = await fetch(url, getOptions(chatId))
+            if (response.status === 200) {
+                logger.info('OK')
+                const data = await response.json()
+                return {status: 200, data}
+            } else {
+                logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
+                return {status: response.status, message: 'Необходима авторизация в системе Кларис'}
+            }
+        } else {
+            logger.error(`${response.status}: Необходима авторизация в системе Кларис`)
+            return {status: response.status, message: 'Необходима авторизация в системе Кларис'}
+        }
+    }
+    return {status: 404, message: 'Не найдено'}
+}
+
+
+module.exports = {getOptions, postOptions, updateToken, getNewToken, getResponse}
