@@ -21,12 +21,13 @@ const logger = pino({
     transport: {
         targets: [
             {
-                target: 'pino-pretty',
+                target: 'pino/file',
                 options: {
                     colorize: false,
                     destination: `${__dirname}/logs/app-trace.log`,
                     translateTime: "SYS:dd-mm-yyyy HH:MM:ss",
                     ignore: "pid,hostname",
+                    mkdir: true,
                 }
             },
             {
@@ -37,6 +38,7 @@ const logger = pino({
                     destination: `${__dirname}/logs/app-error.log`,
                     translateTime: "SYS:dd-mm-yyyy HH:MM:ss",
                     ignore: "pid,hostname",
+                    mkdir: true,
                 }
             },
             {
