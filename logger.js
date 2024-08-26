@@ -21,7 +21,7 @@ const logger = pino({
     transport: {
         targets: [
             {
-                target: 'pino/file',
+                target: 'pino-pretty',
                 options: {
                     colorize: false,
                     destination: `${__dirname}/logs/app-trace.log`,
