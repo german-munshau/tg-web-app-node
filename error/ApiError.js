@@ -23,18 +23,34 @@ class ApiError extends Error {
         return new ApiError(401, message)
     }
 
+    // static common(errorCode, message) {
+    //     if (errorCode === 401) {
+    //         return new ApiError(errorCode, `${message}\n${errorCode} : Ошибка авторизации`)
+    //     }
+    //     if (errorCode === 403) {
+    //         return new ApiError(errorCode, `${message}\n${errorCode} : Доступ запрещен`)
+    //     }
+    //     if (errorCode === 404) {
+    //         return new ApiError(errorCode, `${message}\n${errorCode} : Документ не найден`)
+    //     }
+    //     if (errorCode === 500) {
+    //         return new ApiError(errorCode, `${message}\n${errorCode} : Внутренняя ошибка`)
+    //     }
+    //     return new ApiError(errorCode, message)
+    // }
+
     static common(errorCode, message) {
         if (errorCode === 401) {
-            return new ApiError(errorCode, `${message}\n${errorCode} : Ошибка авторизации`)
+            return new ApiError(errorCode, 'Ошибка авторизации')
         }
         if (errorCode === 403) {
-            return new ApiError(errorCode, `${message}\n${errorCode} : Доступ запрещен`)
+            return new ApiError(errorCode, 'Доступ запрещен')
         }
         if (errorCode === 404) {
-            return new ApiError(errorCode, `${message}\n${errorCode} : Документ не найден`)
+            return new ApiError(errorCode, 'Документ не найден')
         }
         if (errorCode === 500) {
-            return new ApiError(errorCode, `${message}\n${errorCode} : Внутренняя ошибка`)
+            return new ApiError(errorCode, 'Внутренняя ошибка')
         }
         return new ApiError(errorCode, message)
     }
