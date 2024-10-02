@@ -94,7 +94,7 @@ class DocumentController {
             // заменить маршрут
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
 
-            const changedData = {agreementScheme: '5079215165000'}
+            const changedData = JSON.stringify({agreementScheme: '5079215165000'})
 
             logger.info(`changedData: ${changedData}`)
 
