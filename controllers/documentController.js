@@ -96,7 +96,7 @@ class DocumentController {
 
             const changedData = JSON.stringify({agreementScheme: '5079215165000'})
 
-            logger.info(`changedData: ${changedData}`)
+            logger.info(`pay changedData: ${changedData}, pay: ${chatId}`)
 
             const options = patchOptions(chatId, changedData)
 

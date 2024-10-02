@@ -34,12 +34,12 @@ const postOptions = (chatId, comment) => {
 
 const patchOptions = (chatId, changedData) => {
 
-    logger.info('patchOptions:', chatId,changedData)
+    logger.info('!!!patchOptions:', chatId,changedData)
 
 
     const headers = getHeaders(chatId)
 
-    logger.info('headers:', headers)
+    logger.info('!!!headers:', headers)
 
     return {
         method: 'PATCH',
