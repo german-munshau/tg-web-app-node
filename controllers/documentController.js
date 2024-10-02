@@ -92,18 +92,18 @@ class DocumentController {
 
             logger.info(`URL: ${url} body: ${JSON.stringify(req.body)}`)
 
-            const {chatId, messageId, number, changedData} = req.body
+            const {chatId, messageId, number} = req.body
 
-            logger.info(`${chatId} ${messageId} ${number} ${changedData}`)
+            logger.info(`${chatId} ${messageId} ${number}`)
 
             // logger.info(`${chatId} ${messageId} ${number} $`)
 
-      //      const response = await fetch(url, patchOptions(chatId, changedData))
+            //      const response = await fetch(url, patchOptions(chatId, changedData))
 
-      //      logger.info(`${response.status} ${response.statusText}`)
+            //      logger.info(`${response.status} ${response.statusText}`)
 
 
-      //      return res.status(response.status).json({})
+            //      return res.status(response.status).json({})
 
             return res.status(200).json({})
 
