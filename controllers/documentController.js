@@ -110,31 +110,19 @@ class DocumentController {
             logger.info(`${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
 
 
-            if (changeAgreementSchemeResponse.status === 200) {
-                // старт маршрута
-                const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
+            // if (changeAgreementSchemeResponse.status === 200) {
+            //     // старт маршрута
+            //     const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
+            //
+            //     logger.info(`${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
+            //
+            //     return res.status(200).json({})
+            //
+            // } else
+            //     return res.status(changeAgreementSchemeResponse.status).json({})
 
-                logger.info(`${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
+            return res.status(changeAgreementSchemeResponse.status).json({})
 
-                return res.status(200).json({})
-
-            } else
-                return res.status(changeAgreementSchemeResponse.status).json({})
-
-
-            // if (response.status === 200) {
-            //     logger.info(`Документ № ${number} согласован`)
-            //     await bot.editMessageText(`Документ № ${number} согласован`, {
-            //         chat_id: chatId,
-            //         message_id: messageId
-            //     })
-            //     return res.status(response.status).json({})
-            // } else {
-            //     const errorMessage = `Ошибка при согласовании документа № ${number}`
-            //     logger.error(errorMessage)
-            //     await bot.sendMessage(chatId, errorMessage)
-            //     return next(ApiError.common(response.status, errorMessage))
-            // }
         } catch (e) {
             logger.error(e.errorCode?.message)
             return next(ApiError.common(e.errorCode.message))
