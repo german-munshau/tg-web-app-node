@@ -38,7 +38,7 @@ const patchOptions = (chatId, changedData) => {
 
     const headers = getHeaders(chatId)
 
-    logger.info(chatId,changedData,headers)
+    logger.info('patchOptions:', chatId,changedData,headers)
 
     return {
         method: 'PATCH',

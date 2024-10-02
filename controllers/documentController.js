@@ -94,16 +94,18 @@ class DocumentController {
             // заменить маршрут
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
 
-logger.info('options:',  patchOptions(chatId, {agreementScheme: '5079215165000'}))
+            const changedData = {agreementScheme: '5079215165000'}
+
+            logger.info(`changedData: ${changedData}`)
+
+            logger.info('options:', patchOptions(chatId, changedData))
 
 
-            const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, {agreementScheme: '5079215165000'}))
-
-
+            // const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, {agreementScheme: '5079215165000'}))
+            const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, changedData))
 
 
             logger.info(`${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
-
 
 
             if (changeAgreementSchemeResponse.status === 200) {
@@ -116,8 +118,6 @@ logger.info('options:',  patchOptions(chatId, {agreementScheme: '5079215165000'}
 
             } else
                 return res.status(changeAgreementSchemeResponse.status).json({})
-
-
 
 
             // if (response.status === 200) {
