@@ -93,8 +93,18 @@ class DocumentController {
 
             // заменить маршрут
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
+
+logger.info('options:',  patchOptions(chatId, {agreementScheme: '5079215165000'}))
+
+
             const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, {agreementScheme: '5079215165000'}))
+
+
+
+
             logger.info(`${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
+
+
 
             if (changeAgreementSchemeResponse.status === 200) {
                 // старт маршрута
