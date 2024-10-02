@@ -88,15 +88,15 @@ class DocumentController {
         logger.info(`DocumentController pay: ${req.originalUrl}`)
         const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
         try {
-            const {chatId, messageId, number} = req.body
-            logger.info(`${chatId} ${messageId} ${number}`)
+            const {chatId} = req.body
+            // logger.info(`${chatId} ${messageId} ${number}`)
 
             // заменить маршрут
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
 
-            const changedData = JSON.stringify({agreementScheme: '5079215165000'})
+            const changedData = {agreementScheme: '5079215165000'}
 
-            logger.info(`pay changedData: ${changedData}, pay: ${chatId}`)
+            //logger.info(`pay changedData: ${changedData}, pay: ${chatId}`)
 
             const options = patchOptions(chatId, changedData)
 
