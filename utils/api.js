@@ -39,14 +39,14 @@ const patchOptions = (chatId, changedData) => {
 
     const headers = getHeaders(chatId)
 
-    logger.info(`!!!headers:, ${headers}`)
+    logger.info(`!!!headers:, ${JSON.stringify(headers)}`)
 
     return {
         method: 'PATCH',
         // headers: getHeaders(chatId),
         headers,
         body: JSON.stringify(changedData)
-       // body: changedData
+        // body: changedData
     }
 }
 

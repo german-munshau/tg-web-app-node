@@ -100,7 +100,7 @@ class DocumentController {
 
             const options = patchOptions(chatId, changedData)
 
-            logger.info('options:', options)
+            logger.info(`options: ${JSON.stringify(options)}`)
 
 
             // const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, {agreementScheme: '5079215165000'}))
