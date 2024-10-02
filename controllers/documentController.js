@@ -89,39 +89,23 @@ class DocumentController {
         const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
         try {
             const {chatId} = req.body
-            // logger.info(`${chatId} ${messageId} ${number}`)
 
             // заменить маршрут
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
 
             const changedData = {agreementScheme: '5079215165000'}
-
-            //logger.info(`pay changedData: ${changedData}, pay: ${chatId}`)
-
             const options = patchOptions(chatId, changedData)
-
-            logger.info(`options: ${JSON.stringify(options)}`)
-
-
-            // const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, {agreementScheme: '5079215165000'}))
-            // const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, changedData))
             const changeAgreementSchemeResponse = await fetch(baseUrl, options)
 
             logger.info(`${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
 
-
-            // if (changeAgreementSchemeResponse.status === 200) {
-            //     // старт маршрута
-            //     const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
-            //
-            //     logger.info(`${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
-            //
-            //     return res.status(200).json({})
-            //
-            // } else
-            //     return res.status(changeAgreementSchemeResponse.status).json({})
-
-            return res.status(changeAgreementSchemeResponse.status).json({})
+            if (changeAgreementSchemeResponse.status === 200) {
+                // старт маршрута
+                const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
+                logger.info(`${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
+                return res.status(200).json({})
+            } else
+                return res.status(changeAgreementSchemeResponse.status).json({})
 
         } catch (e) {
             logger.error(e.errorCode?.message)

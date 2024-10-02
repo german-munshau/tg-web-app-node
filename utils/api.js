@@ -33,20 +33,11 @@ const postOptions = (chatId, comment) => {
 }
 
 const patchOptions = (chatId, changedData) => {
-
-    logger.info(`patchOptions:, ${chatId}, ${JSON.stringify(changedData)}`)
-
-
     const headers = getHeaders(chatId)
-
-    logger.info(`!!!headers:, ${JSON.stringify(headers)}`)
-
     return {
         method: 'PATCH',
-        // headers: getHeaders(chatId),
         headers,
         body: JSON.stringify(changedData)
-        // body: changedData
     }
 }
 
