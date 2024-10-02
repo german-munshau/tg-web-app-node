@@ -86,26 +86,28 @@ class DocumentController {
 
     async pay(req, res, next) {
         logger.info(`DocumentController pay: ${req.originalUrl}`)
+        const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
         try {
-
-            const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
-
-            logger.info(`URL: ${url} body: ${JSON.stringify(req.body)}`)
-
             const {chatId, messageId, number} = req.body
-
             logger.info(`${chatId} ${messageId} ${number}`)
 
-            // logger.info(`${chatId} ${messageId} ${number} $`)
+            // заменить маршрут
+            logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
+            const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, {agreementScheme: '5079215165000'}))
+            logger.info(`${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
 
-            //      const response = await fetch(url, patchOptions(chatId, changedData))
+            if (changeAgreementSchemeResponse.status === 200) {
+                // старт маршрута
+                const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
 
-            //      logger.info(`${response.status} ${response.statusText}`)
+                logger.info(`${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
+
+                return res.status(200).json({})
+
+            } else
+                return res.status(changeAgreementSchemeResponse.status).json({})
 
 
-            //      return res.status(response.status).json({})
-
-            return res.status(200).json({})
 
 
             // if (response.status === 200) {
