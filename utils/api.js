@@ -32,6 +32,14 @@ const postOptions = (chatId, comment) => {
     }
 }
 
+const patchOptions = (chatId, changedData) => {
+    return {
+        method: 'PATCH',
+        headers: getHeaders(chatId),
+        body: JSON.stringify(changedData)
+    }
+}
+
 const updateToken = (token, login, password, chatId) => {
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     data[chatId] = {token, login, password}
@@ -99,4 +107,4 @@ const getResponse = async (url, chatId, multiple = false) => {
 }
 
 
-module.exports = {postOptions, updateToken, getResponse}
+module.exports = {postOptions, updateToken, getResponse, patchOptions}

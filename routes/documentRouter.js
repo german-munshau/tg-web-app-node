@@ -7,5 +7,6 @@ router.get('/', documentController.get);
 router.get('/:id', documentController.getById);
 router.post('/:id/agree', documentController.agree);
 router.post('/:id/disagree', documentController.disagree);
+router.post('/:id/pay', documentController.pay)
 
 module.exports = router;

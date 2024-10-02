@@ -1,6 +1,6 @@
 const ApiError = require('../error/ApiError');
 const logger = require('../logger')
-const {postOptions, getResponse} = require("../utils/api");
+const {postOptions, getResponse, patchOptions} = require("../utils/api");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
 
@@ -83,6 +83,50 @@ class DocumentController {
             return next(ApiError.common(e.errorCode.message))
         }
     }
+
+    async pay(req, res, next) {
+        logger.info(`DocumentController pay: ${req.originalUrl}`)
+        try {
+
+            const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
+
+            logger.info(`URL: ${url} body: ${JSON.stringify(req.body)}`)
+
+            const {chatId, messageId, number, changedData} = req.body
+
+            logger.info(`${chatId} ${messageId} ${number} ${changedData}`)
+
+            // logger.info(`${chatId} ${messageId} ${number} $`)
+
+      //      const response = await fetch(url, patchOptions(chatId, changedData))
+
+      //      logger.info(`${response.status} ${response.statusText}`)
+
+
+      //      return res.status(response.status).json({})
+
+            return res.status(200).json({})
+
+
+            // if (response.status === 200) {
+            //     logger.info(`Документ № ${number} согласован`)
+            //     await bot.editMessageText(`Документ № ${number} согласован`, {
+            //         chat_id: chatId,
+            //         message_id: messageId
+            //     })
+            //     return res.status(response.status).json({})
+            // } else {
+            //     const errorMessage = `Ошибка при согласовании документа № ${number}`
+            //     logger.error(errorMessage)
+            //     await bot.sendMessage(chatId, errorMessage)
+            //     return next(ApiError.common(response.status, errorMessage))
+            // }
+        } catch (e) {
+            logger.error(e.errorCode?.message)
+            return next(ApiError.common(e.errorCode.message))
+        }
+    }
+
 
 }
 
