@@ -33,9 +33,17 @@ const postOptions = (chatId, comment) => {
 }
 
 const patchOptions = (chatId, changedData) => {
+
+
+
+    const headers = getHeaders(chatId)
+
+    logger.info(chatId,changedData,headers)
+
     return {
         method: 'PATCH',
-        headers: getHeaders(chatId),
+        // headers: getHeaders(chatId),
+        headers,
         body: JSON.stringify(changedData)
     }
 }
