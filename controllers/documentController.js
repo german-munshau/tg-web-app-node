@@ -98,12 +98,14 @@ class DocumentController {
 
             logger.info(`changedData: ${changedData}`)
 
-            logger.info('options:', patchOptions(chatId, changedData))
+            const options = patchOptions(chatId, changedData)
+
+            logger.info('options:', options)
 
 
             // const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, {agreementScheme: '5079215165000'}))
-            const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, changedData))
-
+            // const changeAgreementSchemeResponse = await fetch(baseUrl, patchOptions(chatId, changedData))
+            const changeAgreementSchemeResponse = await fetch(baseUrl, options)
 
             logger.info(`${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
 
