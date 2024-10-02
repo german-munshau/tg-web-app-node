@@ -45,8 +45,8 @@ const patchOptions = (chatId, changedData) => {
         method: 'PATCH',
         // headers: getHeaders(chatId),
         headers,
-        // body: JSON.stringify(changedData)
-        body: changedData
+        body: JSON.stringify(changedData)
+       // body: changedData
     }
 }
 
