@@ -95,6 +95,9 @@ class DocumentController {
 
             const changedData = {agreementScheme: '5079215165000'}
             const options = patchOptions(chatId, changedData)
+
+            logger.info(`options: ${JSON.stringify(options)}`)
+
             const changeAgreementSchemeResponse = await fetch(baseUrl, options)
 
             logger.info(`Замена маршрута:  ${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
