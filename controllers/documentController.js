@@ -109,18 +109,18 @@ class DocumentController {
 
             logger.info(`Замена маршрута:  ${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
 
-//            return res.status(200).json({})
+            return res.status(200).json({})
 
 
-            if (changeAgreementSchemeResponse.status === 200) {
-                // старт маршрута
-                const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
-
-                logger.info(`Старт маршрута: ${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
-                return res.status(200).json({})
-            } else {
-                return res.status(changeAgreementSchemeResponse.status).json({})
-            }
+            // if (changeAgreementSchemeResponse.status === 200) {
+            //     // старт маршрута
+            //     const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
+            //
+            //     logger.info(`Старт маршрута: ${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
+            //     return res.status(200).json({})
+            // } else {
+            //     return res.status(changeAgreementSchemeResponse.status).json({})
+            // }
 
         } catch (e) {
             logger.error(e.errorCode?.message)
