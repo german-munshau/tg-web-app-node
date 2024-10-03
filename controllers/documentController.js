@@ -95,7 +95,9 @@ class DocumentController {
             // заменить маршрут
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
 
-            const changedData = {agreementScheme: '5079215165000', comment: 'ТЕСТ АльтСофт!!! замена маршрута'}
+            // const changedData = {agreementScheme: '5079215165000', comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'}
+            const changedData = {agreementScheme: '5052251848000', comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'}
+
             const options = patchOptions(chatId, changedData)
 
             logger.info(`options: ${JSON.stringify(options)}`)
@@ -103,6 +105,9 @@ class DocumentController {
             const changeAgreementSchemeResponse = await fetch(baseUrl, options)
 
             logger.info(`Замена маршрута:  ${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
+
+            return res.status(200).json({})
+
             //
             // if (changeAgreementSchemeResponse.status === 200) {
             //     // старт маршрута
