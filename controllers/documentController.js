@@ -85,7 +85,6 @@ class DocumentController {
     }
 
 
-
     async pay(req, res, next) {
         logger.info(`DocumentController pay: ${req.originalUrl}`)
         const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
@@ -96,28 +95,31 @@ class DocumentController {
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
 
             // const changedData = {agreementScheme: '5079215165000', comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'}
-            const changedData = {agreementScheme: '5052251848000', comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'}
+            const changedData = {
+                agreementScheme: '5079215165000'
+                //    , comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'
+            }
 
             const options = patchOptions(chatId, changedData)
 
-            logger.info(`options: ${JSON.stringify(options)}`)
+//            logger.info(`options: ${JSON.stringify(options)}`)
 
             const changeAgreementSchemeResponse = await fetch(baseUrl, options)
 
             logger.info(`Замена маршрута:  ${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
 
-            return res.status(200).json({})
+//            return res.status(200).json({})
 
-            //
-            // if (changeAgreementSchemeResponse.status === 200) {
-            //     // старт маршрута
-            //     const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
-            //
-            //     logger.info(`Старт маршрута: ${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
-            //     return res.status(200).json({})
-            // } else {
-            //     return res.status(changeAgreementSchemeResponse.status).json({})
-            // }
+
+            if (changeAgreementSchemeResponse.status === 200) {
+                // старт маршрута
+                const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
+
+                logger.info(`Старт маршрута: ${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
+                return res.status(200).json({})
+            } else {
+                return res.status(changeAgreementSchemeResponse.status).json({})
+            }
 
         } catch (e) {
             logger.error(e.errorCode?.message)
