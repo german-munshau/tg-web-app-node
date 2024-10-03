@@ -93,7 +93,7 @@ class DocumentController {
             // заменить маршрут
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
 
-            const changedData = {agreementScheme: '5079215165000'}
+            const changedData = {agreementScheme: '5079215165000', comment: 'ТЕСТ АльтСофт!!! замена маршрута'}
             const options = patchOptions(chatId, changedData)
 
             logger.info(`options: ${JSON.stringify(options)}`)
