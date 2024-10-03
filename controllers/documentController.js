@@ -97,15 +97,17 @@ class DocumentController {
             const options = patchOptions(chatId, changedData)
             const changeAgreementSchemeResponse = await fetch(baseUrl, options)
 
-            logger.info(`${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
+            logger.info(`Замена маршрута:  ${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
 
             if (changeAgreementSchemeResponse.status === 200) {
                 // старт маршрута
                 const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
-                logger.info(`${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
+
+                logger.info(`Старт маршрута: ${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
                 return res.status(200).json({})
-            } else
+            } else {
                 return res.status(changeAgreementSchemeResponse.status).json({})
+            }
 
         } catch (e) {
             logger.error(e.errorCode?.message)
