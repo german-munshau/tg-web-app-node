@@ -34,12 +34,10 @@ const postOptions = (chatId, comment) => {
 
 const patchOptions = (chatId, changedData) => {
     const headers = getHeaders(chatId)
-    const agreementScheme = 5079215165000
     return {
         method: 'PATCH',
         headers,
-        // body: JSON.stringify(changedData)
-        body: JSON.stringify({agreementScheme})
+        body: JSON.stringify(changedData)
     }
 }
 
