@@ -96,7 +96,8 @@ class DocumentController {
 
             // const changedData = {agreementScheme: '5079215165000', comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'}
             const changedData = {
-                agreementScheme: '5079215165000'
+                agreementScheme: '5079215165000',
+                agreementStep: null
                 //    , comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'
             }
 
