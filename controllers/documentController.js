@@ -89,106 +89,29 @@ class DocumentController {
         logger.info(`DocumentController pay: ${req.originalUrl}`)
         const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
         const agreementId = '5079215165000' // маршрут 'Срочно оплатить'
-
         try {
             const {chatId} = req.body
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
-
-            const options = postOptions(chatId, {agreementId})
-            const url = baseUrl + '/rerouting'
-            // const response = await fetch(baseUrl + '/rerouting', postOptions(chatId, {agreementId}))
-
-            logger.info(`URL: ${url} options: ${JSON.stringify(options)}`)
-
-            const response = await fetch(url, options)
-
-
-
-            logger.info(`Замена маршрута:  ${response.status}`)
-            // return res.status(200).json({})
-            return res.status(200)
+            const response = await fetch(baseUrl + '/rerouting', postOptions(chatId, {agreementId}))
+            logger.info(`${response.status} ${response.statusText}`)
+            if (response.status === 200) {
+                logger.info(`Маршрут документа № ${number} изменен`)
+                await bot.editMessageText(`Маршрут документа № ${number} изменен`, {
+                    chat_id: chatId,
+                    message_id: messageId
+                })
+                return res.status(response.status).json({})
+            } else {
+                const errorMessage = `Ошибка при изменении маршрута документа № ${number}`
+                logger.error(errorMessage)
+                await bot.sendMessage(chatId, errorMessage)
+                return next(ApiError.common(response.status, errorMessage))
+            }
         } catch (e) {
             logger.error(e.errorCode?.message)
             return next(ApiError.common(e.errorCode.message))
         }
     }
-
-    // async pay(req, res, next) {
-    //     logger.info(`DocumentController pay: ${req.originalUrl}`)
-    //     const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
-    //     try {
-    //         const {chatId} = req.body
-    //         logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
-    //
-    //         // const changedData = {agreementScheme: '5079215165000', comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'}
-    //         const changedData = {
-    //             agreementScheme: '5079215165000',
-    //             agreementStep: null
-    //             //    , comment: 'ТЕСТ АльтСофт!!', content: 'ТЕСТ АльтСофт!! замена маршрута'
-    //         }
-    //
-    //         const options = patchOptions(chatId, changedData)
-    //
-    //         logger.info(`options: ${JSON.stringify(options)}`)
-    //
-    //         const changeAgreementSchemeResponse = await fetch(baseUrl, options)
-    //
-    //         logger.info(`Замена маршрута:  ${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
-    //
-    //         // return res.status(200).json({})
-    //
-    //
-    //         if (changeAgreementSchemeResponse.status === 200) {
-    //             // старт маршрута
-    //             const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
-    //
-    //             logger.info(`Старт маршрута: ${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
-    //             return res.status(200).json({})
-    //         } else {
-    //             return res.status(changeAgreementSchemeResponse.status).json({})
-    //         }
-    //
-    //     } catch (e) {
-    //         logger.error(e.errorCode?.message)
-    //         return next(ApiError.common(e.errorCode.message))
-    //     }
-    // }
-
-
-    // async pay(req, res, next) {
-    //     logger.info(`DocumentController pay: ${req.originalUrl}`)
-    //     const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
-    //     try {
-    //         const {chatId} = req.body
-    //
-    //         // заменить маршрут
-    //         logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
-    //
-    //         const changedData = {agreementScheme: '5079215165000', comment: 'ТЕСТ АльтСофт!!! замена маршрута'}
-    //         const options = patchOptions(chatId, changedData)
-    //
-    //         logger.info(`options: ${JSON.stringify(options)}`)
-    //
-    //         const changeAgreementSchemeResponse = await fetch(baseUrl, options)
-    //
-    //         logger.info(`Замена маршрута:  ${changeAgreementSchemeResponse.status} ${changeAgreementSchemeResponse.statusText}`)
-    //
-    //         if (changeAgreementSchemeResponse.status === 200) {
-    //             // старт маршрута
-    //             const runDocumentResponse = await fetch(baseUrl + '/run', postOptions(chatId))
-    //
-    //             logger.info(`Старт маршрута: ${runDocumentResponse.status} ${runDocumentResponse.statusText}`)
-    //             return res.status(200).json({})
-    //         } else {
-    //             return res.status(changeAgreementSchemeResponse.status).json({})
-    //         }
-    //
-    //     } catch (e) {
-    //         logger.error(e.errorCode?.message)
-    //         return next(ApiError.common(e.errorCode.message))
-    //     }
-    // }
-
 
 }
 
