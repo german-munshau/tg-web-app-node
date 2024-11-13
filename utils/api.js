@@ -28,7 +28,7 @@ const postOptions = (chatId, body) => {
     return {
         method: 'POST',
         headers: getHeaders(chatId),
-        body: JSON.stringify({...body})
+        body: JSON.stringify({agreementId: body.agreementId})
     }
 }
 
