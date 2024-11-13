@@ -93,7 +93,16 @@ class DocumentController {
         try {
             const {chatId} = req.body
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
-            const response = await fetch(baseUrl + '/rerouting', postOptions(chatId, {agreementId}))
+
+            const options = postOptions(chatId, {agreementId})
+            const url = baseUrl + '/rerouting'
+            // const response = await fetch(baseUrl + '/rerouting', postOptions(chatId, {agreementId}))
+
+            logger.info(`URL: ${url} options: ${JSON.stringify(options)}`)
+
+            const response = await fetch(url, options)
+
+
 
             logger.info(`Замена маршрута:  ${response.status}`)
             // return res.status(200).json({})
