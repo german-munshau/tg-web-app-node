@@ -24,11 +24,11 @@ const getOptions = (chatId) => {
     }
 }
 
-const postOptions = (chatId, comment) => {
+const postOptions = (chatId, body) => {
     return {
         method: 'POST',
         headers: getHeaders(chatId),
-        body: JSON.stringify({comment})
+        body: JSON.stringify(body)
     }
 }
 
