@@ -93,7 +93,10 @@ class DocumentController {
             const {chatId} = req.body
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
             const response = await fetch(baseUrl + '/rerouting', postOptions(chatId, {agreementId}))
-            logger.info(`Статус response: ${response.status} ${response.statusText}`)
+
+            logger.info(`Response: ${response}`)
+
+            //logger.info(`Статус response: ${response.status} ${response.statusText}`)
             if (response.status === 200) {
                 logger.info(`Маршрут документа № ${number} изменен`)
                 await bot.editMessageText(`Маршрут документа № ${number} изменен`, {
@@ -105,7 +108,8 @@ class DocumentController {
                 const errorMessage = `Ошибка при изменении маршрута документа № ${number}`
                 logger.error(errorMessage)
                 await bot.sendMessage(chatId, errorMessage)
-                return next(ApiError.common(response.status, errorMessage))
+                //return next(ApiError.common(response.status, errorMessage))
+                return next(ApiError.internal(errorMessage))
             }
         } catch (e) {
             logger.error(e.errorCode?.message)
