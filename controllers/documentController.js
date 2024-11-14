@@ -94,7 +94,7 @@ class DocumentController {
             logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
             const response = await fetch(baseUrl + '/rerouting', postOptions(chatId, {agreementId}))
 
-            logger.info(`Response: ${response}`)
+            logger.info(`Response: ${response?.status}, ${response?.data}`)
 
             //logger.info(`Статус response: ${response.status} ${response.statusText}`)
             if (response.status === 200) {
@@ -112,8 +112,11 @@ class DocumentController {
                 return next(ApiError.internal(errorMessage))
             }
         } catch (e) {
-            logger.error(e.errorCode?.message)
-            return next(ApiError.common(e.errorCode?.message))
+            logger.error('Error catch')
+            //logger.error(e.errorCode?.message)
+
+            return next(ApiError.internal('Error catch'))
+            //return next(ApiError.common(e.errorCode?.message))
         }
     }
 
