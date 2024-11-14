@@ -87,16 +87,16 @@ class DocumentController {
 
     async pay(req, res, next) {
         logger.info(`DocumentController pay: ${req.originalUrl}`)
-        const baseUrl = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}`
-        const agreementId = '5079215165000' // маршрут 'Срочно оплатить'
         try {
-            const {chatId} = req.body
-            logger.info(`URL: ${baseUrl} body: ${JSON.stringify(req.body)}`)
-            const response = await fetch(baseUrl + '/rerouting', postOptions(chatId, {agreementId}))
+        const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/rerouting`
+        const agreementId = '5079215165000' // маршрут 'Срочно оплатить'
 
-            logger.info(`Response: ${response?.status}, ${response?.data}`)
+            logger.info(`URL: ${url} body: ${JSON.stringify(req.body)}`)
+            const {chatId, messageId, number} = req.body
+            const response = await fetch(url, postOptions(chatId, {agreementId}))
 
-            //logger.info(`Статус response: ${response.status} ${response.statusText}`)
+            logger.info(`Response: ${response?.status}`)
+
             if (response.status === 200) {
                 logger.info(`Маршрут документа № ${number} изменен`)
                 await bot.editMessageText(`Маршрут документа № ${number} изменен`, {
