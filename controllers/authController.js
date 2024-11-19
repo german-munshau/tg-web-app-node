@@ -26,7 +26,7 @@ class AuthController {
                 .then((response) => response.json())
                 .then(async (data) => {
 
-                    logger.info(`Data Auth: ${data}`);
+                    logger.info(`Data Auth: ${JSON.stringify(data)}`);
 
                     updateToken(data.access_token, login, password, chatId)
                     try {
