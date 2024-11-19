@@ -41,9 +41,9 @@ const patchOptions = (chatId, changedData) => {
     }
 }
 
-const updateToken = (token, login, password, chatId) => {
+const updateToken = (chatId, token, login, password, userInfo) => {
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
-    data[chatId] = {token, login, password}
+    data[chatId] = {token, login, password, ...userInfo}
     fs.writeFileSync(DB, JSON.stringify(data, null, 2), {encoding: "utf8", flag: 'w',});
 }
 
@@ -59,7 +59,7 @@ const getNewToken = async (chatId) => {
 
         const data = await newUserData.json()
         if (data?.access_token) {
-            updateToken(data.access_token, userData.login, userData.password, chatId)
+            updateToken(chatId, data.access_token, userData.login, userData.password )
             return true
         } else return false
 

@@ -46,7 +46,7 @@ class AuthController {
                     // загрузить инфо о пользователе
 
                     //data.access_token
-                    const currentUserUrl = `${CLARIS_API_URL}/vNext/v1/users/current`
+                    const userInfoUrl = `${CLARIS_API_URL}/vNext/v1/users/current`
 
                     const options = {
                         method: 'GET',
@@ -56,13 +56,14 @@ class AuthController {
                         }
                     }
 
-                    const currentUserResponse = await fetch(currentUserUrl, options)
+                    const userInfoResponse = await fetch(userInfoUrl, options)
 
-                    const userData = await currentUserResponse.json()
+                    const userInfo = await userInfoResponse.json()
 
-                    logger.info(`UserData: ${JSON.stringify(userData)}`);
+                    logger.info(`UserData: ${JSON.stringify(userInfo)}`);
 
-                    updateToken(data.access_token, login, password, chatId)
+                    // updateToken(data.access_token, login, password, chatId)
+                    updateToken(chatId, data.access_token, login, password, {...userInfo})
                     try {
                         await bot.answerWebAppQuery(queryId, {
                             type: 'article',
