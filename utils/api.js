@@ -4,7 +4,7 @@ const logger = require("../logger");
 const DB = process.env.DB
 
 
-const getUserData = (chatId) => {
+export const getUserData = (chatId) => {
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     return data[chatId]
 }

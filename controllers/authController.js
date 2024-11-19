@@ -1,5 +1,5 @@
 const ApiError = require('../error/ApiError');
-const {updateToken, getResponse} = require("../utils/api");
+const {updateToken, getResponse, getUserData} = require("../utils/api");
 const logger = require("../logger");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
@@ -15,19 +15,17 @@ const getMessageText = (message) => {
 
 class AuthController {
 
-
-    async getCurrentInfoUser(req, res, next) {
-        logger.info(`CurrentInfoUser get: ${req.originalUrl}`)
-        const url = `${CLARIS_API_URL}/vNext/v1/users/current`
-        const response = await getResponse(url, req.query.chat_id, true)
-        if (response.status === 200) {
-            return res.status(200).json(response.data)
-        } else {
-            logger.error(response.message)
-            return next(ApiError.common(response.status, response.message))
+    async userInfo(req, res, next) {
+        logger.info(`AuthController getUserInfo : ${req.originalUrl}`)
+        try {
+            const data = getUserData(req.query.chat_id)
+            return res.status(200).json(data)
+        } catch (e) {
+            const message = 'Ошибка при получении данных пользователя из БД'
+            logger.error(message)
+            return next(ApiError.internal(message))
         }
     }
-
 
     async auth(req, res, next) {
         try {
@@ -40,14 +38,7 @@ class AuthController {
             })
                 .then((response) => response.json())
                 .then(async (data) => {
-
-                    logger.info(`Data Auth: ${JSON.stringify(data)}`);
-
-                    // загрузить инфо о пользователе
-
-                    //data.access_token
                     const userInfoUrl = `${CLARIS_API_URL}/vNext/v1/users/current`
-
                     const options = {
                         method: 'GET',
                         headers: {
@@ -55,14 +46,8 @@ class AuthController {
                             "Authorization": 'Bearer ' + data.access_token,
                         }
                     }
-
                     const userInfoResponse = await fetch(userInfoUrl, options)
-
                     const userInfo = await userInfoResponse.json()
-
-                    logger.info(`UserData: ${JSON.stringify(userInfo)}`);
-
-                    // updateToken(data.access_token, login, password, chatId)
                     updateToken(chatId, data.access_token, login, password, {...userInfo})
                     try {
                         await bot.answerWebAppQuery(queryId, {
