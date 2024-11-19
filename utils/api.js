@@ -4,7 +4,7 @@ const logger = require("../logger");
 const DB = process.env.DB
 
 
-export const getUserData = (chatId) => {
+const getUserData = (chatId) => {
     const data = JSON.parse(fs.readFileSync(DB, {encoding: 'utf8'}))
     return data[chatId]
 }
@@ -59,7 +59,7 @@ const getNewToken = async (chatId) => {
 
         const data = await newUserData.json()
         if (data?.access_token) {
-            updateToken(chatId, data.access_token, userData.login, userData.password )
+            updateToken(chatId, data.access_token, userData.login, userData.password)
             return true
         } else return false
 
@@ -107,4 +107,4 @@ const getResponse = async (url, chatId, multiple = false) => {
 }
 
 
-module.exports = {postOptions, updateToken, getResponse, patchOptions}
+module.exports = {postOptions, updateToken, getResponse, patchOptions, getUserData}
