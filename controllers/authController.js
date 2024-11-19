@@ -1,5 +1,5 @@
 const ApiError = require('../error/ApiError');
-const {updateToken} = require("../utils/api");
+const {updateToken, getResponse} = require("../utils/api");
 const logger = require("../logger");
 
 const CLARIS_API_URL = process.env.CLARIS_API_URL
@@ -14,6 +14,21 @@ const getMessageText = (message) => {
 }
 
 class AuthController {
+
+
+    async getCurrentInfoUser(req, res, next) {
+        logger.info(`CurrentInfoUser get: ${req.originalUrl}`)
+        const url = `${CLARIS_API_URL}/vNext/v1/users/current`
+        const response = await getResponse(url, req.query.chat_id, true)
+        if (response.status === 200) {
+            return res.status(200).json(response.data)
+        } else {
+            logger.error(response.message)
+            return next(ApiError.common(response.status, response.message))
+        }
+    }
+
+
     async auth(req, res, next) {
         try {
             logger.info(`AuthController auth: ${req.originalUrl} body: ${JSON.stringify(req.body)}`)
@@ -27,6 +42,25 @@ class AuthController {
                 .then(async (data) => {
 
                     logger.info(`Data Auth: ${JSON.stringify(data)}`);
+
+                    // загрузить инфо о пользователе
+
+                    //data.access_token
+                    const currentUserUrl = `${CLARIS_API_URL}/vNext/v1/users/current`
+
+                    const options = {
+                        method: 'GET',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Bearer ' + data.access_token,
+                        }
+                    }
+
+                    const currentUserResponse = await fetch(currentUserUrl, options)
+
+                    const userData = await currentUserResponse.json()
+
+                    logger.info(`UserData: ${JSON.stringify(userData)}`);
 
                     updateToken(data.access_token, login, password, chatId)
                     try {
