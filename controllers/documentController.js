@@ -89,11 +89,13 @@ class DocumentController {
         logger.info(`DocumentController pay: ${req.originalUrl}`)
         try {
         const url = `${CLARIS_API_URL}/vNext/v1/documents/${req.params["id"]}/rerouting`
-        const agreementId = '5079215165000' // маршрут 'Срочно оплатить'
+
+            const agreementId = '5079215165000' // маршрут 'Срочно оплатить'
+            const kadrId = '4944011359000' // Святов
 
             logger.info(`URL: ${url} body: ${JSON.stringify(req.body)}`)
             const {chatId, messageId, number} = req.body
-            const response = await fetch(url, postOptions(chatId, {agreementId}))
+            const response = await fetch(url, postOptions(chatId, {agreementId, kadrId}))
 
             logger.info(`Response: ${response?.status}`)
 
